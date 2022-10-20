@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { landingPageDTO } from './Packages/packages.model';
 import PackagesList from "./Packages/PackagesList";
-import CustomButton from "./utils/CustomButton";
+import Menu from './Menu';
 
 function App() {
 
@@ -44,14 +44,15 @@ function App() {
 
 
   return (
+    <><Menu/>
     <Container>
-      <CustomButton> text</CustomButton>
       <h3>In Store</h3>
       <PackagesList packages={packages.inSucursal}/>
 
       <h3>Current Packages</h3>
       <PackagesList packages={packages.newPackages}/>
     </Container>
+    </>
   );
 }
 
