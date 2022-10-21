@@ -1,25 +1,26 @@
 import { ReactElement } from "react";
 import Loading from "./Loading";
 
-export default function GenericList(props: genericListProps) {
+// Lista Generica.
+export default function GenericList(props: genericList) {
   if (!props.list) {
-    if (props.LoadingUI) {
-      return props.LoadingUI;
+    if (props.loadingUI) {
+      return props.loadingUI;
     }
     return <Loading />;
   } else if (props.list.length === 0) {
     if (props.emptyListUI) {
       return props.emptyListUI;
     }
-    return <>There are no elements to display</>;
+    return <>No hay elementos para mostrar</>;
   } else {
     return props.children;
   }
 }
 
-interface genericListProps {
+interface genericList {
   list: any;
-  LoadingUI?: ReactElement;
-  emptyListUI?: ReactElement;
   children: ReactElement;
+  loadingUI?: ReactElement;
+  emptyListUI?: ReactElement;
 }

@@ -1,57 +1,60 @@
-import { Container } from "@mui/system";
-import { useEffect, useState } from "react";
 import "./App.css";
-import { landingPageDTO } from './Packages/packages.model';
-import PackagesList from "./Packages/PackagesList";
-import Menu from './Menu';
+import Menu from "./utils/Menu";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import routes from "./route-config";
+import configureValidations from "./validations";
+import AuthContex from "./auth/AutenticacionContext";
+import { configurateInterceptor } from "./utils/interceptors";
+import { useState, useEffect } from "react";
+import { claim } from "./auth/auth.model";
+import { obtainClaims } from "./auth/manageJWT";
+
+configureValidations();
+configurateInterceptor();
 
 function App() {
+  const [claims, setClaims] = useState<claim[]>([]);
 
-  const [packages, setPackages] = useState<landingPageDTO>({});
+  useEffect(() => {
+    setClaims(obtainClaims());
+  }, []);
 
-  useEffect(() =>{
-    const timerId = setTimeout(()=>{
-      setPackages({
-        inSucursal: [
-          {
-            id: 1,
-            name: "Box",
-            image: "https://i.imgur.com/FyaVIB5.png",
-          },
-          {
-            id: 2,
-            name: "Box Two",
-            image: "https://i.imgur.com/FyaVIB5.png",
-          },
-        ],
-         newPackages:  [
-          {
-            id: 4,
-            name: "Box Three",
-            image: "https://i.imgur.com/FyaVIB5.png",
-          },
-          {
-            id: 5,
-            name: "Box Four",
-            image: "https://i.imgur.com/FyaVIB5.png",
-          },
-        ]
-      })
-    },1000)
+  function update(claims: claim[]) {
+    setClaims(claims);
+  }
 
-    return() => clearTimeout(timerId);
-  })
-
+  function isAdministrator() {
+    return (
+      claims.findIndex(
+        (claim) => claim.name === "role" && claim.value === "admin"
+      ) > -1
+    );
+  }
 
   return (
-    <><Menu/>
-    <Container>
-      <h3>In Store</h3>
-      <PackagesList packages={packages.inSucursal}/>
-
-      <h3>Current Packages</h3>
-      <PackagesList packages={packages.newPackages}/>
-    </Container>
+    <>
+      <BrowserRouter>
+        <AuthContex.Provider value={{ claims, update }}>
+          <Menu />
+          <div className="container">
+            <Routes>
+              {routes.map(({ path, element: Component, isAdmin }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    isAdmin && !isAdministrator() ? (
+                      <>No tiene permiso para acceder a este componente</>
+                    ) : (
+                      <Component />
+                    )
+                  }
+                />
+              ))}
+            </Routes>
+          </div>
+        </AuthContex.Provider>
+      </BrowserRouter>
     </>
   );
 }
