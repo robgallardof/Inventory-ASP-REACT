@@ -6,10 +6,9 @@ namespace DovaPackAPI.Entities
     {
         public int PackagesBoxId { get; set; }
 
-        public int BranchId { get; set; }
+        public int WarehouseId { get; set; }
 
-        public PackagesBox PackagesBox { get; set; }
-
-        public Warehouse Branch { get; set; }
+        public Warehouse Warehouse { get; set; }
+        public PackageBox PackageBox { get; set; }
     }
 }

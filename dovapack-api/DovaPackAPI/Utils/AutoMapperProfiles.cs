@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using NetTopologySuite.Geometries;
 using DovaPackAPI.Controllers.Entities;
 using DovaPackAPI.DTOs;
 using DovaPackAPI.Entities;
+using Microsoft.AspNetCore.Identity;
+using NetTopologySuite.Geometries;
 
 namespace DovaPackAPI.Utils
 {
@@ -26,32 +26,32 @@ namespace DovaPackAPI.Utils
                 .ForMember(x => x.Latitude, dto => dto.MapFrom(field => field.Ubication.Y))
                 .ForMember(x => x.Longitude, dto => dto.MapFrom(field => field.Ubication.X));
 
-            CreateMap<PackagesBoxCreationDTO, PackagesBox>()
+            CreateMap<PackagesBoxCreationDTO, PackageBox>()
                 .ForMember(x => x.Image, options => options.Ignore())
-                .ForMember(x => x.NewPackagesBox, options => options.MapFrom(MappedToysCategories))
-                .ForMember(x => x.PackagesBoxWarehouses, options => options.MapFrom(MappedToysBranches))
-                .ForMember(x => x.PackagesBoxProviders, options => options.MapFrom(MappedToysProviders));
+                .ForMember(x => x.PackagesBoxCategories, options => options.MapFrom(MappedPackagesBoxCategories))
+                .ForMember(x => x.PackagesBoxWarehouses, options => options.MapFrom(MappedPackagesBoxwarehousees))
+                .ForMember(x => x.PackagesBoxProviders, options => options.MapFrom(MappedPackagesBoxProviders));
 
-            CreateMap<PackagesBox, PackagesBoxDTO>()
-               .ForMember(x => x.Categories, options => options.MapFrom(MappedToysDTOCategories))
-               .ForMember(x => x.Providers, options => options.MapFrom(MappedToysDTOProviders))
-               .ForMember(x => x.Warehouses, options => options.MapFrom(MappedToysDTOBranches));
+            CreateMap<PackageBox, PackageBoxDTO>()
+               .ForMember(x => x.Categories, options => options.MapFrom(MappedPackagesBoxDTOCategories))
+               .ForMember(x => x.Providers, options => options.MapFrom(MappedPackagesBoxDTOProviders))
+               .ForMember(x => x.Warehouses, options => options.MapFrom(MappedPackagesBoxDTOwarehousees));
 
             CreateMap<IdentityUser, UserDTO>();
         }
 
-        private List<CategoryDTO> MappedToysDTOCategories(PackagesBox packageBox, PackagesBoxDTO toyDTO)
+        private List<CategoryDTO> MappedPackagesBoxDTOCategories(PackageBox packageBox, PackageBoxDTO packageBoxDTO)
         {
             var result = new List<CategoryDTO>();
 
-            if (packageBox.NewPackagesBox != null)
+            if (packageBox.PackagesBoxCategories != null)
             {
-                foreach (var categoryToy in packageBox.NewPackagesBox)
+                foreach (var categoryPackageBox in packageBox.PackagesBoxCategories)
                 {
                     result.Add(new CategoryDTO()
                     {
-                        Id = categoryToy.CategoryId,
-                        Name = categoryToy.Category.Name
+                        Id = categoryPackageBox.CategoryId,
+                        Name = categoryPackageBox.Category.Name
                     });
                 }
             }
@@ -59,20 +59,20 @@ namespace DovaPackAPI.Utils
             return result;
         }
 
-        private List<PackagesBoxProviderDTO> MappedToysDTOProviders(PackagesBox packageBox, PackagesBoxDTO toyDTO)
+        private List<PackageBoxProviderDTO> MappedPackagesBoxDTOProviders(PackageBox packageBox, PackageBoxDTO packageBoxDTO)
         {
-            var result = new List<PackagesBoxProviderDTO>();
+            var result = new List<PackageBoxProviderDTO>();
 
             if (packageBox.PackagesBoxProviders != null)
             {
-                foreach (var providerToy in packageBox.PackagesBoxProviders)
+                foreach (var providerPackageBox in packageBox.PackagesBoxProviders)
                 {
-                    result.Add(new PackagesBoxProviderDTO()
+                    result.Add(new PackageBoxProviderDTO()
                     {
-                        Id = providerToy.ProviderId,
-                        Name = providerToy.Provider.Name,
-                        Image = providerToy.Provider.Image,
-                        Order = providerToy.Order
+                        Id = providerPackageBox.ProviderId,
+                        Name = providerPackageBox.Provider.Name,
+                        Image = providerPackageBox.Provider.Image,
+                        Order = providerPackageBox.Order
                     });
                 }
             }
@@ -80,20 +80,20 @@ namespace DovaPackAPI.Utils
             return result;
         }
 
-        private List<WarehouseDTO> MappedToysDTOBranches(PackagesBox packageBox, PackagesBoxDTO toyDTO)
+        private List<WarehouseDTO> MappedPackagesBoxDTOwarehousees(PackageBox packageBox, PackageBoxDTO packageBoxDTO)
         {
             var result = new List<WarehouseDTO>();
 
             if (packageBox.PackagesBoxWarehouses != null)
             {
-                foreach (var branchToy in packageBox.PackagesBoxWarehouses)
+                foreach (var warehousePackageBox in packageBox.PackagesBoxWarehouses)
                 {
                     result.Add(new WarehouseDTO()
                     {
-                        Id = branchToy.BranchId,
-                        Name = branchToy.Branch.Name,
-                        Latitude = branchToy.Branch.Ubication.Y,
-                        Longitude = branchToy.Branch.Ubication.X
+                        Id = warehousePackageBox.WarehouseId,
+                        Name = warehousePackageBox.Warehouse.Name,
+                        Latitude = warehousePackageBox.Warehouse.Ubication.Y,
+                        Longitude = warehousePackageBox.Warehouse.Ubication.X
                     }); ;
                 }
             }
@@ -101,15 +101,15 @@ namespace DovaPackAPI.Utils
             return result;
         }
 
-        private List<NewPackagesBox> MappedToysCategories(PackagesBoxCreationDTO toyCreationDTO, PackagesBox packageBox)
+        private List<PackagesBoxCategories> MappedPackagesBoxCategories(PackagesBoxCreationDTO packageBoxCreationDTO, PackageBox packageBox)
         {
-            var result = new List<NewPackagesBox>();
+            var result = new List<PackagesBoxCategories>();
 
-            if (toyCreationDTO.CategoriesIds == null) { return result; }
+            if (packageBoxCreationDTO.CategoriesIds == null) { return result; }
 
-            foreach (var id in toyCreationDTO.CategoriesIds)
+            foreach (var id in packageBoxCreationDTO.CategoriesIds)
             {
-                result.Add(new NewPackagesBox()
+                result.Add(new PackagesBoxCategories()
                 {
                     CategoryId = id,
                 });
@@ -118,30 +118,30 @@ namespace DovaPackAPI.Utils
             return result;
         }
 
-        private List<PackagesBoxWarehouses> MappedToysBranches(PackagesBoxCreationDTO toyCreationDTO, PackagesBox packageBox)
+        private List<PackagesBoxWarehouses> MappedPackagesBoxwarehousees(PackagesBoxCreationDTO packageBoxCreationDTO, PackageBox packageBox)
         {
             var result = new List<PackagesBoxWarehouses>();
 
-            if (toyCreationDTO.WarehousesIds == null) { return result; }
+            if (packageBoxCreationDTO.WarehousesIds == null) { return result; }
 
-            foreach (var id in toyCreationDTO.WarehousesIds)
+            foreach (var id in packageBoxCreationDTO.WarehousesIds)
             {
                 result.Add(new PackagesBoxWarehouses()
                 {
-                    BranchId = id,
+                    WarehouseId = id,
                 });
             }
 
             return result;
         }
 
-        private List<PackagesBoxProviders> MappedToysProviders(PackagesBoxCreationDTO toyCreationDTO, PackagesBox packageBox)
+        private List<PackagesBoxProviders> MappedPackagesBoxProviders(PackagesBoxCreationDTO packageBoxCreationDTO, PackageBox packageBox)
         {
             var result = new List<PackagesBoxProviders>();
 
-            if (toyCreationDTO.Providers == null) { return result; }
+            if (packageBoxCreationDTO.Providers == null) { return result; }
 
-            foreach (var provider in toyCreationDTO.Providers)
+            foreach (var provider in packageBoxCreationDTO.Providers)
             {
                 result.Add(new PackagesBoxProviders()
                 {

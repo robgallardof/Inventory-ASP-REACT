@@ -10,9 +10,9 @@ import FormGroupMarkdown from "../utils/FormGroupMarkdown";
 export default function FormProvider(props: formProviderProps) {
   const schemeProvider = Yup.object().shape({
     name: Yup.string()
-      .min(3, "El nombre de la proveedor debe de tener más de 2 caracteres.")
-      .max(50, "El nombre de la proveedor debe de tener menos de 50 caracteres.")
-      .required("El nombre de la proveedor es requerido.")
+      .min(3, "El nombre del Proveedor debe de tener más de 2 caracteres.")
+      .max(50, "El nombre del Proveedor debe de tener menos de 50 caracteres.")
+      .required("El nombre del Proveedor es requerido.")
       .firstCapitalLetter(),
   });
 
@@ -26,8 +26,8 @@ export default function FormProvider(props: formProviderProps) {
         <Form>
           <FormGroupText
             field="name"
-            label="Nombre de la Proveedor"
-            placeholder="Nombre de la proveedor"
+            label="Nombre del Proveedor"
+            placeholder="Nombre del proveedor"
           />
           <FormGroupsImage
             field="image"

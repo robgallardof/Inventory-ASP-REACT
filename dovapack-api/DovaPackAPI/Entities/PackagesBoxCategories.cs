@@ -2,13 +2,13 @@
 
 namespace DovaPackAPI.Entities
 {
-    public class NewPackagesBox
+    public class PackagesBoxCategories
     {
-        public int PackagesBoxId { get; set; }
         public int CategoryId { get; set; }
 
-        public PackagesBox PackagesBox { get; set; }
+        public int PackageBoxId { get; set; }
 
+        public PackageBox PackageBox { get; set; }
         public Category Category { get; set; }
     }
 }

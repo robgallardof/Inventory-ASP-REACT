@@ -11,11 +11,11 @@ import { urlPackagesBox } from "../utils/endpoints";
 
 export default function IndividualPackage(props: individualPackageBoxProps) {
   // Construcción del Link.
-  const buildLink = () => `/packagebox/${props.packagebox.id}`;
+  const buildLink = () => `/packagebox/${props.packageBox.id}`;
   const alerts = useContext(AlertContext);
 
   function DeletePackage() {
-    axios.delete(`${urlPackagesBox}/${props.packagebox.id}`).then(() => {
+    axios.delete(`${urlPackagesBox}/${props.packageBox.id}`).then(() => {
       alerts();
     });
   }
@@ -23,10 +23,10 @@ export default function IndividualPackage(props: individualPackageBoxProps) {
   return (
     <div className={css.div}>
       <a href={buildLink()}>
-        <img src={props.packagebox.image} alt="Imagen" />
+        <img src={props.packageBox.image} alt="Imagen" />
       </a>
       <p>
-        <a href={buildLink()}>{props.packagebox.name}</a>
+        <a href={buildLink()}>{props.packageBox.name}</a>
       </p>
       <Autorizate
         role="admin"
@@ -35,7 +35,7 @@ export default function IndividualPackage(props: individualPackageBoxProps) {
             <Link
               style={{ marginRight: "1rem" }}
               className="btn btn-info"
-              to={`/packagebox/edit/${props.packagebox.id}`}
+              to={`/packagebox/edit/${props.packageBox.id}`}
             >
               Editar
             </Link>
@@ -53,5 +53,5 @@ export default function IndividualPackage(props: individualPackageBoxProps) {
 }
 
 interface individualPackageBoxProps {
-  packagebox: packageBoxDTO;
+  packageBox: packageBoxDTO;
 }

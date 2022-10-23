@@ -18,33 +18,30 @@ export function convertProviderToFormData(provider: providerCreationDTO): FormDa
     return formData;
 }
 
-export function convertPackageToFormData(packagesbox: packageBoxCreationDTO): FormData {
+export function convertPackageToFormData(packagesBox: packageBoxCreationDTO): FormData {
     const formData = new FormData();
 
-    formData.append('name', packagesbox.name);
+    formData.append('name', packagesBox.name);
 
-    if (packagesbox.description){
-        formData.append('description', packagesbox.description);
+    if (packagesBox.description){
+        formData.append('description', packagesBox.description);
     }
 
+    // formData.append('price',String(packagesBox.price));
+
+    // formData.append('inWarehouse', String(packagesBox.inWarehouse));
     
-    formData.append('review', packagesbox.review);
-
-    formData.append('price',String(packagesbox.price));
-
-    formData.append('inWarehouse', String(packagesbox.inWarehouse));
-    
-    if (packagesbox.comingSoonDate){
-        formData.append("comingSoonDate", formatDate(packagesbox.comingSoonDate));
+    if (packagesBox.priorityShippingDate){
+        formData.append("priorityShippingDate", formatDate(packagesBox.priorityShippingDate));
     }
 
-    if (packagesbox.image){
-        formData.append('image', packagesbox.image);
+    if (packagesBox.image){
+        formData.append('image', packagesBox.image);
     }
 
-    formData.append("categoriesIds", JSON.stringify(packagesbox.categoriesIds));
-    formData.append("branchesIds", JSON.stringify(packagesbox.branchesIds));
-    formData.append("providers", JSON.stringify(packagesbox.providers));
+    formData.append("categoriesIds", JSON.stringify(packagesBox.categoriesIds));
+    formData.append("warehousesIds", JSON.stringify(packagesBox.warehousesIds));
+    formData.append("providers", JSON.stringify(packagesBox.providers));
 
     return formData;
 }

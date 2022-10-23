@@ -25,7 +25,7 @@ export default function Menu() {
                 className={({ isActive }) =>
                   "nav-link" + (isActive ? " active" : " inactive")
                 }
-                to="/packagebox/filter"
+                to="/packageBox/filter"
               >
                 Filtrar Paquetes
               </NavLink>
@@ -71,7 +71,7 @@ export default function Menu() {
                       className={({ isActive }) =>
                         "nav-link" + (isActive ? " active" : " inactive")
                       }
-                      to="/packagebox/create"
+                      to="/packageBox/create"
                     >
                       Crear Paquete
                     </NavLink>

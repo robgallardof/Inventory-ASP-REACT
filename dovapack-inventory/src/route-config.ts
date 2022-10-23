@@ -5,7 +5,6 @@ import Register from './auth/Register';
 import CreateWarehouse from './warehouse/CreateWarehouse';
 import EditWarehouse from './warehouse/EditWareHouse';
 import IndexWarehouse from './warehouse/IndexWarehouse';
-import CreateProvider from './provider/CreateBrandProvider';
 import EditProvider from './provider/EditProvider';
 import IndexProvider from './provider/IndexProvider';
 import CreateCategory from './categories/CreateCategory';
@@ -17,6 +16,7 @@ import FilterPackage from './PackageBox/FilterPackageBox';
 import CreatePackage from './PackageBox/CreatePackageBox';
 import DetailPackage from './PackageBox/DetailPackageBox';
 import EditPackage from './PackageBox/EditPackageBox';
+import CreateProvider from './provider/CreateProvider';
 
 
 // Configuramos ruteo.

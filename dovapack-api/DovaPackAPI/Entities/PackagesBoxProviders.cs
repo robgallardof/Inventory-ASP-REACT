@@ -8,10 +8,10 @@ namespace DovaPackAPI.Entities
 
         public int ProviderId { get; set; }
 
-        public PackagesBox PackagesBox { get; set; }
+        public int Order { get; set; }
 
         public Provider Provider { get; set; }
 
-        public int Order { get; set; }
+        public PackageBox PackageBox { get; set; }
     }
 }

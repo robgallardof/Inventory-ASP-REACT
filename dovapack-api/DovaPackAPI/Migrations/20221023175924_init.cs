@@ -50,21 +50,6 @@ namespace DovaPackAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Providers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Biography = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Providers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -78,7 +63,7 @@ namespace DovaPackAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PackagesBoxsBoxBox",
+                name: "PackageBox",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -87,14 +72,28 @@ namespace DovaPackAPI.Migrations
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     InWarehouse = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    ComingSoonDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PriorityShippingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Review = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PackageBox", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Providers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackagesBoxsBox", x => x.Id);
+                    table.PrimaryKey("PK_Providers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,50 +217,25 @@ namespace DovaPackAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PackagesBoxProviders",
+                name: "PackagesBoxCategories",
                 columns: table => new
                 {
-                    PackagesBoxId = table.Column<int>(type: "int", nullable: false),
-                    ProviderId = table.Column<int>(type: "int", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    PackageBoxId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackagesBoxProviders", x => new { x.ProviderId, x.PackagesBoxId });
+                    table.PrimaryKey("PK_PackagesBoxCategories", x => new { x.PackageBoxId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_PackagesBoxProviders_Providers_ProviderId",
-                        column: x => x.ProviderId,
-                        principalTable: "Providers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PackagesBoxProviders_PackagesBoxsBox_PackagesBoxId",
-                        column: x => x.PackagesBoxId,
-                        principalTable: "PackagesBoxsBoxBox",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NewPackagesBox",
-                columns: table => new
-                {
-                    PackagesBoxId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NewPackagesBox", x => new { x.PackagesBoxId, x.CategoryId });
-                    table.ForeignKey(
-                        name: "FK_NewPackagesBox_Categories_CategoryId",
+                        name: "FK_PackagesBoxCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NewPackagesBox_PackagesBoxsBox_PackagesBoxId",
-                        column: x => x.PackagesBoxId,
-                        principalTable: "PackagesBoxsBoxBox",
+                        name: "FK_PackagesBoxCategories_PackageBox_PackageBoxId",
+                        column: x => x.PackageBoxId,
+                        principalTable: "PackageBox",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -285,9 +259,34 @@ namespace DovaPackAPI.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Ratings_PackagesBoxsBox_PackagesBoxId",
+                        name: "FK_Ratings_PackageBox_PackagesBoxId",
                         column: x => x.PackagesBoxId,
-                        principalTable: "PackagesBoxsBoxBox",
+                        principalTable: "PackageBox",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PackagesBoxProviders",
+                columns: table => new
+                {
+                    PackagesBoxId = table.Column<int>(type: "int", nullable: false),
+                    ProviderId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    PackageBoxId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PackagesBoxProviders", x => new { x.ProviderId, x.PackagesBoxId });
+                    table.ForeignKey(
+                        name: "FK_PackagesBoxProviders_PackageBox_PackageBoxId",
+                        column: x => x.PackageBoxId,
+                        principalTable: "PackageBox",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PackagesBoxProviders_Providers_ProviderId",
+                        column: x => x.ProviderId,
+                        principalTable: "Providers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -297,20 +296,20 @@ namespace DovaPackAPI.Migrations
                 columns: table => new
                 {
                     PackagesBoxId = table.Column<int>(type: "int", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: false)
+                    WarehouseId = table.Column<int>(type: "int", nullable: false),
+                    PackageBoxId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackagesBoxWarehouses", x => new { x.PackagesBoxId, x.BranchId });
+                    table.PrimaryKey("PK_PackagesBoxWarehouses", x => new { x.PackagesBoxId, x.WarehouseId });
                     table.ForeignKey(
-                        name: "FK_PackagesBoxWarehouses_PackagesBoxsBox_PackagesBoxId",
-                        column: x => x.PackagesBoxId,
-                        principalTable: "PackagesBoxsBoxBox",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_PackagesBoxWarehouses_PackageBox_PackageBoxId",
+                        column: x => x.PackageBoxId,
+                        principalTable: "PackageBox",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PackagesBoxWarehouses_Warehouses_BranchId",
-                        column: x => x.BranchId,
+                        name: "FK_PackagesBoxWarehouses_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -356,19 +355,24 @@ namespace DovaPackAPI.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PackagesBoxWarehouses_BranchId",
-                table: "PackagesBoxWarehouses",
-                column: "BranchId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PackagesBoxProviders_PackagesBoxId",
-                table: "PackagesBoxProviders",
-                column: "PackagesBoxId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NewPackagesBox_CategoryId",
-                table: "NewPackagesBox",
+                name: "IX_PackagesBoxCategories_CategoryId",
+                table: "PackagesBoxCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PackagesBoxProviders_PackageBoxId",
+                table: "PackagesBoxProviders",
+                column: "PackageBoxId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PackagesBoxWarehouses_PackageBoxId",
+                table: "PackagesBoxWarehouses",
+                column: "PackageBoxId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PackagesBoxWarehouses_WarehouseId",
+                table: "PackagesBoxWarehouses",
+                column: "WarehouseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_PackagesBoxId",
@@ -399,13 +403,13 @@ namespace DovaPackAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PackagesBoxWarehouses");
+                name: "PackagesBoxCategories");
 
             migrationBuilder.DropTable(
                 name: "PackagesBoxProviders");
 
             migrationBuilder.DropTable(
-                name: "NewPackagesBox");
+                name: "PackagesBoxWarehouses");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -414,19 +418,19 @@ namespace DovaPackAPI.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Warehouses");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Providers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "PackagesBoxsBoxBox");
+                name: "PackageBox");
         }
     }
 }

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Formik, Form, Field } from "formik";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CategoryDTO } from "../categories/category.model";
+import { categoryDTO } from "../categories/category.model";
 import { urlCategories, urlPackagesBox } from "../utils/endpoints";
 import Button from "../utils/Buttons";
 import Pagination from "../utils/Pagination";
@@ -13,14 +13,14 @@ export default function FilterPackage() {
   const valueInit: FilterPackageForm = {
     name: "",
     categoryId: 0,
-    newPackages: false,
-    inWarehouse: false,
+    priorityShipping: false,
+    // inWarehouse: false,
     page: 1,
     recordsPerPage: 1,
   };
 
-  const [categories, setCategories] = useState<CategoryDTO[]>([]);
-  const [packagebox, setPackages] = useState<packageBoxDTO[]>([]);
+  const [categories, setCategories] = useState<categoryDTO[]>([]);
+  const [packageBox, setPackages] = useState<packageBoxDTO[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const query = new URLSearchParams(useLocation().search);
@@ -28,7 +28,7 @@ export default function FilterPackage() {
   useEffect(() => {
     axios
       .get(`${urlCategories}/all`)
-      .then((answer: AxiosResponse<CategoryDTO[]>) => {
+      .then((answer: AxiosResponse<categoryDTO[]>) => {
         setCategories(answer.data);
       });
   }, []);
@@ -42,13 +42,13 @@ export default function FilterPackage() {
       valueInit.categoryId = parseInt(query.get("categoryId")!, 10);
     }
 
-    if (query.get("newPackages")) {
-      valueInit.newPackages = true;
+    if (query.get("priorityShipping")) {
+      valueInit.priorityShipping = true;
     }
 
-    if (query.get("inWarehouse")) {
-      valueInit.inWarehouse = true;
-    }
+    // if (query.get("inWarehouse")) {
+    //   valueInit.inWarehouse = true;
+    // }
 
     if (query.get("page")) {
       valueInit.page = parseInt(query.get("page")!, 10);
@@ -83,13 +83,13 @@ export default function FilterPackage() {
       queryStrings.push(`categoryId=${values.categoryId}`);
     }
 
-    if (values.newPackages) {
-      queryStrings.push(`coomingSoonPackages=${values.newPackages}`);
+    if (values.priorityShipping) {
+      queryStrings.push(`priorityShipping=${values.priorityShipping}`);
     }
 
-    if (values.inWarehouse) {
-      queryStrings.push(`inWarehouse=${values.inWarehouse}`);
-    }
+    // if (values.inWarehouse) {
+    //   queryStrings.push(`inWarehouse=${values.inWarehouse}`);
+    // }
 
     queryStrings.push(`page=${values.page}`);
 
@@ -138,15 +138,15 @@ export default function FilterPackage() {
                 <div className="form-group mx-sm-3 mb-2">
                   <Field
                     className="form-check-input"
-                    id="newPackages"
-                    name="newPackages"
+                    id="priorityShipping"
+                    name="priorityShipping"
                     type="checkbox"
                   />
-                  <label className="form-check-label" htmlFor="newPackages">
+                  <label className="form-check-label" htmlFor="priorityShipping">
                     Próximos Paquetes
                   </label>
                 </div>
-                <div className="form-group mx-sm-3 mb-2">
+                {/* <div className="form-group mx-sm-3 mb-2">
                   <Field
                     className="form-check-input"
                     id="inWarehouse"
@@ -156,7 +156,7 @@ export default function FilterPackage() {
                   <label className="form-check-label" htmlFor="inWarehouse">
                     Paquetes en Stock
                   </label>
-                </div>
+                </div> */}
 
                 <Button
                   className="btn btn-primary mb-2 mx-sm-3"
@@ -176,7 +176,7 @@ export default function FilterPackage() {
               </div>
             </Form>
 
-            <ListPackages packagebox={packagebox} />
+            <ListPackages packageBox={packageBox} />
             <Pagination
               quantityTotalPages={totalPages}
               currentPage={values.page}
@@ -195,8 +195,8 @@ export default function FilterPackage() {
 interface FilterPackageForm {
   name: string;
   categoryId: number;
-  newPackages: boolean;
-  inWarehouse: boolean;
+  priorityShipping: boolean;
+  // inWarehouse: boolean;
   page: number;
   recordsPerPage: number;
 }

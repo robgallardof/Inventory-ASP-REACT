@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using DovaPackAPI.Controllers.Entities;
+using DovaPackAPI.DTOs;
+using DovaPackAPI.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using DovaPackAPI.Controllers.Entities;
-using DovaPackAPI.DTOs;
-using DovaPackAPI.Utils;
 
 namespace DovaPackAPI.Controllers
 {
@@ -37,13 +37,11 @@ namespace DovaPackAPI.Controllers
         }
 
         [HttpGet("all")]
-        [AllowAnonymous]
         public async Task<ActionResult<List<CategoryDTO>>> All()
         {
             var categories = await context.Categories.OrderBy(x => x.Name).ToListAsync();
             return mapper.Map<List<CategoryDTO>>(categories);
         }
-
 
         [HttpGet("{Id:int}")]
         public async Task<ActionResult<CategoryDTO>> Get(int Id)

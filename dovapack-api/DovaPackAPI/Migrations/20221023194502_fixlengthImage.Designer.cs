@@ -13,14 +13,14 @@ using NetTopologySuite.Geometries;
 namespace DovaPackAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221021041010_init")]
-    partial class init
+    [Migration("20221023194502_fixlengthImage")]
+    partial class fixlengthImage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -43,16 +43,13 @@ namespace DovaPackAPI.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Controllers.Entities.PackagesBox", b =>
+            modelBuilder.Entity("DovaPackAPI.Controllers.Entities.PackageBox", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("ComingSoonDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -60,49 +57,78 @@ namespace DovaPackAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("InWarehouse")
-                        .HasColumnType("bit");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<DateTime>("PriorityShippingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Review")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("PackagesBoxsBoxBox");
+                    b.ToTable("PackageBox");
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Entities.Branch", b =>
+            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxCategories", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("PackageBoxId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.HasKey("PackageBoxId", "CategoryId");
 
-                    b.Property<Point>("Ubication")
-                        .HasColumnType("geography");
+                    b.HasIndex("CategoryId");
 
-                    b.HasKey("Id");
+                    b.ToTable("PackagesBoxCategories");
+                });
 
-                    b.ToTable("Warehouses");
+            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxProviders", b =>
+                {
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PackagesBoxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PackageBoxId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProviderId", "PackagesBoxId");
+
+                    b.HasIndex("PackageBoxId");
+
+                    b.ToTable("PackagesBoxProviders");
+                });
+
+            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxWarehouses", b =>
+                {
+                    b.Property<int>("PackagesBoxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PackageBoxId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PackagesBoxId", "WarehouseId");
+
+                    b.HasIndex("PackageBoxId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("PackagesBoxWarehouses");
                 });
 
             modelBuilder.Entity("DovaPackAPI.Entities.Provider", b =>
@@ -130,54 +156,6 @@ namespace DovaPackAPI.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxWarehouses", b =>
-                {
-                    b.Property<int>("PackagesBoxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PackagesBoxId", "BranchId");
-
-                    b.HasIndex("BranchId");
-
-                    b.ToTable("PackagesBoxWarehouses");
-                });
-
-            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxProviders", b =>
-                {
-                    b.Property<int>("ProviderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PackagesBoxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProviderId", "PackagesBoxId");
-
-                    b.HasIndex("PackagesBoxId");
-
-                    b.ToTable("PackagesBoxProviders");
-                });
-
-            modelBuilder.Entity("DovaPackAPI.Entities.NewPackagesBox", b =>
-                {
-                    b.Property<int>("PackagesBoxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PackagesBoxId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("NewPackagesBox");
-                });
-
             modelBuilder.Entity("DovaPackAPI.Entities.Rating", b =>
                 {
                     b.Property<int>("Id")
@@ -202,6 +180,27 @@ namespace DovaPackAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("DovaPackAPI.Entities.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Point>("Ubication")
+                        .HasColumnType("geography");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -402,66 +401,62 @@ namespace DovaPackAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxWarehouses", b =>
+            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxCategories", b =>
                 {
-                    b.HasOne("DovaPackAPI.Entities.Branch", "Branch")
-                        .WithMany("PackagesBoxWarehouses")
-                        .HasForeignKey("BranchId")
+                    b.HasOne("DovaPackAPI.Controllers.Entities.Category", "Category")
+                        .WithMany("PackagesBoxCategories")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DovaPackAPI.Controllers.Entities.PackagesBox", "PackagesBox")
-                        .WithMany("PackagesBoxWarehouses")
-                        .HasForeignKey("PackagesBoxId")
+                    b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackageBox")
+                        .WithMany("PackagesBoxCategories")
+                        .HasForeignKey("PackageBoxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Branch");
+                    b.Navigation("Category");
 
-                    b.Navigation("PackagesBox");
+                    b.Navigation("PackageBox");
                 });
 
             modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxProviders", b =>
                 {
+                    b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackageBox")
+                        .WithMany("PackagesBoxProviders")
+                        .HasForeignKey("PackageBoxId");
+
                     b.HasOne("DovaPackAPI.Entities.Provider", "Provider")
                         .WithMany("PackagesBoxProviders")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DovaPackAPI.Controllers.Entities.PackagesBox", "PackagesBox")
-                        .WithMany("PackagesBoxProviders")
-                        .HasForeignKey("PackagesBoxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PackageBox");
 
                     b.Navigation("Provider");
-
-                    b.Navigation("PackagesBox");
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Entities.NewPackagesBox", b =>
+            modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxWarehouses", b =>
                 {
-                    b.HasOne("DovaPackAPI.Controllers.Entities.Category", "Category")
-                        .WithMany("NewPackagesBox")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackageBox")
+                        .WithMany("PackagesBoxWarehouses")
+                        .HasForeignKey("PackageBoxId");
+
+                    b.HasOne("DovaPackAPI.Entities.Warehouse", "Warehouse")
+                        .WithMany("PackagesBoxWarehouses")
+                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DovaPackAPI.Controllers.Entities.PackagesBox", "PackagesBox")
-                        .WithMany("NewPackagesBox")
-                        .HasForeignKey("PackagesBoxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PackageBox");
 
-                    b.Navigation("Category");
-
-                    b.Navigation("PackagesBox");
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("DovaPackAPI.Entities.Rating", b =>
                 {
-                    b.HasOne("DovaPackAPI.Controllers.Entities.PackagesBox", "PackagesBox")
+                    b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackagesBox")
                         .WithMany()
                         .HasForeignKey("PackagesBoxId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -529,26 +524,26 @@ namespace DovaPackAPI.Migrations
 
             modelBuilder.Entity("DovaPackAPI.Controllers.Entities.Category", b =>
                 {
-                    b.Navigation("NewPackagesBox");
+                    b.Navigation("PackagesBoxCategories");
                 });
 
-            modelBuilder.Entity("DovaPackAPI.Controllers.Entities.PackagesBox", b =>
+            modelBuilder.Entity("DovaPackAPI.Controllers.Entities.PackageBox", b =>
                 {
+                    b.Navigation("PackagesBoxCategories");
+
                     b.Navigation("PackagesBoxProviders");
 
-                    b.Navigation("NewPackagesBox");
-
-                    b.Navigation("PackagesBoxWarehouses");
-                });
-
-            modelBuilder.Entity("DovaPackAPI.Entities.Branch", b =>
-                {
                     b.Navigation("PackagesBoxWarehouses");
                 });
 
             modelBuilder.Entity("DovaPackAPI.Entities.Provider", b =>
                 {
                     b.Navigation("PackagesBoxProviders");
+                });
+
+            modelBuilder.Entity("DovaPackAPI.Entities.Warehouse", b =>
+                {
+                    b.Navigation("PackagesBoxWarehouses");
                 });
 #pragma warning restore 612, 618
         }

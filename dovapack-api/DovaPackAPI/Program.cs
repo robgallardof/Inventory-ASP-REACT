@@ -1,4 +1,9 @@
 using AutoMapper;
+using DovaPackAPI;
+using DovaPackAPI.ApiBehavior;
+using DovaPackAPI.Controllers.Filters;
+using DovaPackAPI.Filters;
+using DovaPackAPI.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +13,10 @@ using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using DovaPackAPI;
-using DovaPackAPI.ApiBehavior;
-using DovaPackAPI.Controllers.Filters;
-using DovaPackAPI.Filters;
-using DovaPackAPI.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 var Configuration = builder.Configuration;
-
 
 // Add services to the container.
 
@@ -82,7 +81,6 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(typeof(FilterException));
     options.Filters.Add(typeof(ParseBadRequest));
 }).ConfigureApiBehaviorOptions(BehaviorBadRequest.Parsing);
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

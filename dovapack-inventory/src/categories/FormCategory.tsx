@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../utils/Buttons";
 import FormGroupText from "../utils/FormGroupText";
 import * as Yup from "yup";
-import { CategoryCreationDTO } from "./category.model";
+import { categoryCreationDTO } from "./category.model";
 
 export default function FormCategory(props: formCategoryProps) {
   const schemaCategory = Yup.object().shape({
@@ -43,9 +43,9 @@ export default function FormCategory(props: formCategoryProps) {
 }
 
 interface formCategoryProps {
-  model: CategoryCreationDTO;
+  model: categoryCreationDTO;
   onSubmit(
-    values: CategoryCreationDTO,
-    action: FormikHelpers<CategoryCreationDTO>
+    values: categoryCreationDTO,
+    action: FormikHelpers<categoryCreationDTO>
   ): void;
 }

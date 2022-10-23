@@ -6,10 +6,10 @@ import IndividualPackageBox from "./IndividualPackageBox";
 
 export default function ListPackages(props: listPackagesProps) {
   return (
-    <GenericList list={props.packagebox}>
+    <GenericList list={props.packageBox}>
       <div className={css.div}>
-        {props.packagebox?.map((packagesbox) => (
-          <IndividualPackageBox key={packagesbox.id} packagebox={packagesbox} />
+        {props.packageBox?.map((packagesbox) => (
+          <IndividualPackageBox key={packagesbox.id} packageBox={packagesbox} />
         ))}
       </div>
     </GenericList>
@@ -17,5 +17,5 @@ export default function ListPackages(props: listPackagesProps) {
 }
 
 interface listPackagesProps {
-  packagebox?: packageBoxDTO[];
+  packageBox?: packageBoxDTO[];
 }

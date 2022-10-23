@@ -12,22 +12,22 @@ import { packageBoxDTO } from "./packagesBox.models";
 
 export default function DetailPackage() {
   const { id }: any = useParams();
-  const [pack, setPackage] = useState<packageBoxDTO>();
+  const [packagebox, setPackage] = useState<packageBoxDTO>();
 
   useEffect(() => {
     axios.get(`${urlPackagesBox}/${id}`).then((answer: AxiosResponse<packageBoxDTO>) => {
-      answer.data.comingSoonDate = new Date(answer.data.comingSoonDate);
+      answer.data.priorityShippingDate = new Date(answer.data.priorityShippingDate);
       setPackage(answer.data);
     });
   }, [id]);
 
   function transformCoordinates(): coordinateDTO[] {
-    if (pack?.warehouses) {
-      const coordinates = pack.warehouses.map((branch) => {
+    if (packagebox?.warehouses) {
+      const coordinates = packagebox.warehouses.map((warehouse) => {
         return {
-          lat: branch.latitude,
-          lng: branch.longitude,
-          name: branch.name,
+          lat: warehouse.latitude,
+          lng: warehouse.longitude,
+          name: warehouse.name,
         } as coordinateDTO;
       });
       return coordinates;
@@ -36,79 +36,53 @@ export default function DetailPackage() {
     return [];
   }
 
-  function generateURLYoutubeEmbed(url: any): string {
-    if (!url) {
-      return "";
-    }
-
-    var videoId = url.split("v=")[1];
-    var positionAmpersand = videoId.indexOf("&");
-    if (positionAmpersand !== -1) {
-      videoId = videoId.substring(0, positionAmpersand);
-    }
-
-    return `https://www.youtube.com/embed/${videoId}`;
-  }
 
   async function onVote(vote: number) {
     await axios.post(urlRatings, { punctuation: vote, packId: id });
     Swal.fire({ icon: "success", title: "Voto recibido" });
   }
 
-  return pack ? (
+  return packagebox ? (
     <div style={{ display: "flex" }}>
       <div>
         <h2>
-          {pack.name} ({pack.comingSoonDate.getFullYear()})
+          {packagebox.name} ({packagebox.priorityShippingDate.getFullYear()})
         </h2>
-        {pack.categories?.map((category) => (
+        {packagebox.categories?.map((category) => (
           <Link
             key={category.id}
             style={{ marginRight: "5px" }}
             className="btn btn-primary btn-sm rounded-pill"
-            to={`/pack/filter?categoryId=${category.id}`}
+            to={`/packagebox/filter?categoryId=${category.id}`}
           >
             {category.name}
           </Link>
         ))}
-        | {pack.comingSoonDate.toDateString()}| {pack.averageVote!}
+        | {packagebox.priorityShippingDate.toDateString()}| {packagebox.averageVote!}
         | Valoraciones:
-        <Rating maxValue={5} valueSelected={pack.voteUser!} onChange={onVote} />
+        <Rating maxValue={5} valueSelected={packagebox.voteUser!} onChange={onVote} />
         <div style={{ display: "flex", marginTop: "1rem" }}>
           <span style={{ display: "inline-block", marginRight: "1rem" }}>
             <img
-              src={pack.image}
+              src={packagebox.image}
               style={{ width: "225px", height: "315px" }}
               alt="Imagen Paquete"
             />
           </span>
-          {pack.review ? (
-            <div>
-              <iframe
-                title="review"
-                width="560"
-                height="315"
-                src={generateURLYoutubeEmbed(pack.review)}
-                frameBorder={0}
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          ) : null}
         </div>
-        {pack.description ? (
+        {packagebox.description ? (
           <div style={{ marginTop: "1rem" }}>
             <h3>Descripción</h3>
             <div>
-              <ReactMarkdown>{pack.description}</ReactMarkdown>
+              <ReactMarkdown>{packagebox.description}</ReactMarkdown>
             </div>
           </div>
         ) : null}
-        {pack.providers && pack.providers.length > 0 ? (
+        {packagebox.providers && packagebox.providers.length > 0 ? (
           <div style={{ marginTop: "1rem" }}>
             <h3>Proveedores</h3>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {pack.providers?.map((provider) => (
+              {packagebox.providers?.map((provider) => (
                 <div key={provider.id} style={{ marginBottom: "2px" }}>
                   <img
                     alt="Imagen Proveedor"
@@ -138,7 +112,7 @@ export default function DetailPackage() {
             </div>
           </div>
         ) : null}
-        {pack.warehouses && pack.warehouses.length > 0 ? (
+        {packagebox.warehouses && packagebox.warehouses.length > 0 ? (
           <div>
             <h2>Mostrándose en los siguiente warehouses</h2>
             <MapLeaflet onlyRead={true} coordinates={transformCoordinates()} />

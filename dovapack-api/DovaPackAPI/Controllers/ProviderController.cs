@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DovaPackAPI.DTOs;
 using DovaPackAPI.Entities;
 using DovaPackAPI.Utils;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DovaPackAPI.Controllers
 {
-    [Route("api/provider")]
+
     [ApiController]
+    [Route("api/provider")]
     public class ProviderController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -34,14 +35,14 @@ namespace DovaPackAPI.Controllers
         }
 
         [HttpGet("findByName/{name}")]
-        public async Task<List<PackagesBoxProviderDTO>> FindByName(string name = "")
+        public async Task<List<PackageBoxProviderDTO>> FindByName(string name = "")
         {
-            if (string.IsNullOrWhiteSpace(name)) { return new List<PackagesBoxProviderDTO>(); }
+            if (string.IsNullOrWhiteSpace(name)) { return new List<PackageBoxProviderDTO>(); }
 
             return await context.Providers
                 .Where(x => x.Name.Contains(name))
                 .OrderBy(x => x.Name)
-                .Select(x => new PackagesBoxProviderDTO { Id = x.Id, Name = x.Name, Image = x.Image })
+                .Select(x => new PackageBoxProviderDTO { Id = x.Id, Name = x.Name, Image = x.Image })
                 .Take(5)
                 .ToListAsync();
         }
@@ -68,7 +69,6 @@ namespace DovaPackAPI.Controllers
             {
                 provider.Image = await storageFiles.SaveFile(container, providerCreationDTO.Image);
             }
-
             context.Add(provider);
             await context.SaveChangesAsync();
             return NoContent();

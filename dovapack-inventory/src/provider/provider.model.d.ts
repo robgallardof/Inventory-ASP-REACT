@@ -12,7 +12,7 @@ export interface providerCreationDTO {
   biography?: string;
 }
 
-export interface providerPackageDTO {
+export interface providerPackageBoxDTO {
   id: number;
   name: string;
   image: string;

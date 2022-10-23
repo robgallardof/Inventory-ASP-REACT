@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DovaPackAPI.Entities;
+﻿using DovaPackAPI.Entities;
 using DovaPackAPI.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DovaPackAPI.Controllers.Entities
 {
@@ -13,6 +13,6 @@ namespace DovaPackAPI.Controllers.Entities
         [FirstCapitalLetter]
         public string Name { get; set; }
 
-        public List<NewPackagesBox> NewPackagesBox { get; set; }
+        public List<PackagesBoxCategories> PackagesBoxCategories { get; set; }
     }
 }

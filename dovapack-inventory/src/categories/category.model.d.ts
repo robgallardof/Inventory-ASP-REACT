@@ -1,8 +1,8 @@
-export interface CategoryCreationDTO {
+export interface categoryCreationDTO {
   name: string;
 }
 
-export interface CategoryDTO {
+export interface categoryDTO {
   id: number;
   name: string;
 }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DovaPackAPI.DTOs;
 using DovaPackAPI.Entities;
 using DovaPackAPI.Utils;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DovaPackAPI.Controllers
 {
@@ -26,43 +26,43 @@ namespace DovaPackAPI.Controllers
         {
             var queryable = context.Warehouses.AsQueryable();
             await HttpContext.InsertParameterPaginationInHeader(queryable);
-            var branches = await queryable.OrderBy(x => x.Name).Paginate(paginationDTO).ToListAsync();
-            return mapper.Map<List<WarehouseDTO>>(branches);
+            var warehouses = await queryable.OrderBy(x => x.Name).Paginate(paginationDTO).ToListAsync();
+            return mapper.Map<List<WarehouseDTO>>(warehouses);
         }
 
         [HttpGet("{Id:int}")]
         public async Task<ActionResult<WarehouseDTO>> Get(int Id)
         {
-            var branches = await context.Warehouses.FirstOrDefaultAsync(x => x.Id == Id);
+            var warehouses = await context.Warehouses.FirstOrDefaultAsync(x => x.Id == Id);
 
-            if (branches == null)
+            if (warehouses == null)
             {
                 return NotFound();
             }
 
-            return mapper.Map<WarehouseDTO>(branches);
+            return mapper.Map<WarehouseDTO>(warehouses);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] WarehouseCreationDTO branchCreationDTO)
+        public async Task<ActionResult> Post([FromBody] WarehouseCreationDTO warehouseCreationDTO)
         {
-            var branch = mapper.Map<Warehouse>(branchCreationDTO);
-            context.Add(branch);
+            var warehouse = mapper.Map<Warehouse>(warehouseCreationDTO);
+            context.Add(warehouse);
             await context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int Id, [FromBody] WarehouseCreationDTO branchCreationDTO)
+        public async Task<ActionResult> Put(int Id, [FromBody] WarehouseCreationDTO warehouseCreationDTO)
         {
-            var branch = await context.Warehouses.FirstOrDefaultAsync(x => x.Id == Id);
+            var warehouse = await context.Warehouses.FirstOrDefaultAsync(x => x.Id == Id);
 
-            if (branch == null)
+            if (warehouse == null)
             {
                 return NotFound();
             }
 
-            branch = mapper.Map(branchCreationDTO, branch);
+            warehouse = mapper.Map(warehouseCreationDTO, warehouse);
 
             await context.SaveChangesAsync();
 

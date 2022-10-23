@@ -18,7 +18,7 @@ export default function EditProvider() {
       <EditEntity<providerCreationDTO, providerDTO>
         url={urlProviders}
         urlIndex="/provider"
-        nameEntity="Proovedor"
+        nameEntity="Proovedores"
         transformFormData={convertProviderToFormData}
         transform={transform}
       >

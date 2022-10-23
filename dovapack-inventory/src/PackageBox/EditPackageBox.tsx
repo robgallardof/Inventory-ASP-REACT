@@ -1,17 +1,16 @@
-import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { urlPackagesBox } from "../utils/endpoints";
-import { convertPackageToFormData } from "../utils/FormDataUtils";
+import { packageBoxCreationDTO, packageBoxPutGetDTO } from './packagesBox.models';
+import axios, { AxiosResponse } from "axios";
+import { useState, useEffect } from "react";
 import Loading from "../utils/Loading";
 import ShowErrors from "../utils/ShowErrors";
-import FormPackages from "./FormPackageBox";
-import { packageBoxCreationDTO, packageBoxPutGetDTO } from "./packagesBox.models";
+import { convertPackageToFormData } from '../utils/FormDataUtils';
+import FormPackagesBox from './FormPackageBox';
 
-
-export default function EditPackage() {
-  const [packagesbox, setPackage] = useState<packageBoxCreationDTO>();
-  const [packPutGet, setPackagePutGet] = useState<packageBoxPutGetDTO>();
+export default function EditPackageBox() {
+  const [packageBox, setPackageBox] = useState<packageBoxCreationDTO>();
+  const [packageBoxPutGet, setPackageBoxToyPutGet] = useState<packageBoxPutGetDTO>();
   const { id }: any = useParams();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
@@ -21,22 +20,19 @@ export default function EditPackage() {
       .get(`${urlPackagesBox}/PutGet/${id}`)
       .then((answer: AxiosResponse<packageBoxPutGetDTO>) => {
         const model: packageBoxCreationDTO = {
-          name: answer.data.packagebox.name,
-          inWarehouse: answer.data.packagebox.inWarehouse,
-          review: answer.data.packagebox.review,
-          imageLink: answer.data.packagebox.image,
-          description: answer.data.packagebox.description,
-          comingSoonDate: new Date(answer.data.packagebox.comingSoonDate),
-          price: answer.data.packagebox.price,
+          name: answer.data.packageBox?.name,
+          imageLink: answer.data.packageBox.image,
+          description: answer.data.packageBox.description,
+          priorityShippingDate: new Date(answer.data.packageBox.priorityShippingDate),
         };
-        setPackage(model);
-        setPackagePutGet(answer.data);
+        setPackageBox(model);
+        setPackageBoxToyPutGet(answer.data);
       });
   }, [id]);
 
-  async function edit(packToEdit: packageBoxCreationDTO) {
+  async function edit(packageBoxToEdit: packageBoxCreationDTO) {
     try {
-      const formData = convertPackageToFormData(packToEdit);
+      const formData = convertPackageToFormData(packageBoxToEdit);
       await axios({
         method: "put",
         url: `${urlPackagesBox}/${id}`,
@@ -45,22 +41,24 @@ export default function EditPackage() {
       });
       navigate(`/packagebox/${id}`);
     } catch (error) {
+      console.log(error.response.data);
       setErrors(error.response.data);
     }
   }
 
   return (
     <>
-      <h3>Editar Película</h3>
+      <h3>Editar Paquete</h3>
+      
       <ShowErrors errors={errors} />
-      {packagesbox && packPutGet ? (
-        <FormPackages
-          providersSelected={packPutGet.providers}
-          warehousesSelected={packPutGet.branchesSelected}
-          warehousesNotSelected={packPutGet.warehousesNotSelected}
-          categoriesNotSelected={packPutGet.categoriesNotSelected}
-          categoriesSelected={packPutGet.categoriesSelected}
-          model={packagesbox}
+      {packageBox && packageBoxPutGet ? (
+        <FormPackagesBox
+          providersSelected={packageBoxPutGet.providers}
+          warehousesSelected={packageBoxPutGet.warehousesSelected}
+          warehousesNotSelected={packageBoxPutGet.warehousesNotSelected}
+          categoriesNotSelected={packageBoxPutGet.categoriesNotSelected}
+          categoriesSelected={packageBoxPutGet.categoriesSelected}
+          model={packageBox}
           onSubmit={async (values) => await edit(values)}
         />
       ) : (
@@ -69,3 +67,5 @@ export default function EditPackage() {
     </>
   );
 }
+
+

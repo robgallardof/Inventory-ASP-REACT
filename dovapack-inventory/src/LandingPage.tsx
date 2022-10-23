@@ -6,7 +6,7 @@ import ListPackages from "./PackageBox/ListPackageBox";
 import { landingPageDTO } from "./PackageBox/packagesBox.models";
 
 export default function LandingPage() {
-  const [packagebox, setPackages] = useState<landingPageDTO>({});
+  const [packageBox, setPackages] = useState<landingPageDTO>({});
 
   useEffect(() => {
     LoadData();
@@ -22,10 +22,10 @@ export default function LandingPage() {
     <>
       <AlertContext.Provider value={() => LoadData()}>
         <h3>Paquetes disponibles</h3>
-        <ListPackages packagebox={packagebox.inWarehouse} />
+        {/* <ListPackages packageBox={packageBox.inWarehouse} /> */}
 
         <h3>Próximos Paquetes</h3>
-        <ListPackages packagebox={packagebox.newPackages} />
+        <ListPackages packageBox={packageBox.priorityShippingPackages} />
       </AlertContext.Provider>
     </>
   );

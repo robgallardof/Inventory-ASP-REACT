@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DovaPackAPI.Utils;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using DovaPackAPI.Utils;
 
 namespace DovaPackAPI.DTOs
 {
@@ -12,14 +12,10 @@ namespace DovaPackAPI.DTOs
         [StringLength(maximumLength: 50)]
         public string Description { get; set; }
 
-        [StringLength(maximumLength: 100)]
-        public string? Review { get; set; }
+        //[StringLength(maximumLength: 100)]
+        //public decimal Price { get; set; }
 
-        public bool InWarehouse { get; set; }
-
-        public decimal Price { get; set; }
-
-        public DateTime ComingSoonDate { get; set; }
+        public DateTime PriorityShippingDate { get; set; }
 
         public DateTime RegisterDate { get; set; }
 

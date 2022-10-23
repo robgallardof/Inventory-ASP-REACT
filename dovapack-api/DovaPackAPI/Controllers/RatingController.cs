@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using DovaPackAPI.DTOs;
+using DovaPackAPI.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DovaPackAPI.DTOs;
-using DovaPackAPI.Entities;
-using DovaPackAPI.Utils;
 
 namespace DovaPackAPI.Controllers
 {
@@ -41,7 +40,7 @@ namespace DovaPackAPI.Controllers
                 {
                     PackagesBoxId = ratingDTO.PackagesBoxId,
                     Punctuation = ratingDTO.Punctuation,
-                    UserId = userId 
+                    UserId = userId
                 };
                 context.Add(rating);
             }

@@ -1,12 +1,12 @@
 import { urlCategories } from "../utils/endpoints";
 import EditEntity from "../utils/EditEntity";
-import { CategoryCreationDTO, CategoryDTO } from "./category.model";
+import { categoryCreationDTO, categoryDTO } from "./category.model";
 import FormCategory from "./FormCategory";
 
 export default function EditCategory() {
   return (
     <>
-      <EditEntity<CategoryCreationDTO, CategoryDTO>
+      <EditEntity<categoryCreationDTO, categoryDTO>
         url={urlCategories}
         urlIndex="/category"
         nameEntity="Categorías"

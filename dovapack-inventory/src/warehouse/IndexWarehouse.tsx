@@ -12,7 +12,7 @@ export default function IndexWareHouse() {
         title="Almacenes"
         nameEntity="Almacen"
       >
-        {(branches, buttons) =>
+        {(warehouses, buttons) =>
           <>
             <thead>
               <tr>
@@ -21,7 +21,7 @@ export default function IndexWareHouse() {
               </tr>
             </thead>
             <tbody>
-              {branches?.map(warehouse =>
+              {warehouses?.map(warehouse =>
                 <tr key={warehouse.id}>
                   <td>
                     {buttons(`/warehouse/edit/${warehouse.id}`, warehouse.id)}

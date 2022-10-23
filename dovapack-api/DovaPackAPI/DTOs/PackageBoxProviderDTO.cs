@@ -1,6 +1,6 @@
 ﻿namespace DovaPackAPI.DTOs
 {
-    public class PackagesBoxProviderDTO
+    public class PackageBoxProviderDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -3,14 +3,14 @@ import { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { urlProviders } from "../utils/endpoints";
-import { providerPackageDTO } from "./provider.model";
+import { providerPackageBoxDTO } from "./provider.model";
 
 export default function TypeAheadprovider(props: typeAheadproviderProps) {
-  const [options, setOptions] = useState<providerPackageDTO[]>([]);
+  const [options, setOptions] = useState<providerPackageBoxDTO[]>([]);
 
-  const selection: providerPackageDTO[] = [];
+  const selection: providerPackageBoxDTO[] = [];
 
-  const [elementDragged, setElementDragged] = useState<providerPackageDTO | undefined>(
+  const [elementDragged, setElementDragged] = useState<providerPackageBoxDTO | undefined>(
     undefined
   );
 
@@ -20,17 +20,17 @@ export default function TypeAheadprovider(props: typeAheadproviderProps) {
     setIsLoading(true);
     axios
       .get(`${urlProviders}/findByName/${query}`)
-      .then((answer: AxiosResponse<providerPackageDTO[]>) => {
+      .then((answer: AxiosResponse<providerPackageBoxDTO[]>) => {
         setOptions(answer.data);
         setIsLoading(false);
       });
   }
 
-  function manageDragStart(provider: providerPackageDTO) {
+  function manageDragStart(provider: providerPackageBoxDTO) {
     setElementDragged(provider);
   }
 
-  function manageDragOver(provider: providerPackageDTO) {
+  function manageDragOver(provider: providerPackageBoxDTO) {
     if (!elementDragged) {
       return;
     }
@@ -107,8 +107,8 @@ export default function TypeAheadprovider(props: typeAheadproviderProps) {
 }
 
 interface typeAheadproviderProps {
-  providers: providerPackageDTO[];
-  onAdd(providers: providerPackageDTO[]): void;
-  listUI(provider: providerPackageDTO): ReactElement;
-  onRemove(provider: providerPackageDTO): void;
+  providers: providerPackageBoxDTO[];
+  onAdd(providers: providerPackageBoxDTO[]): void;
+  listUI(provider: providerPackageBoxDTO): ReactElement;
+  onRemove(provider: providerPackageBoxDTO): void;
 }

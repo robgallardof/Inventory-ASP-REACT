@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DovaPackAPI.Validations;
+﻿using DovaPackAPI.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DovaPackAPI.DTOs
 {

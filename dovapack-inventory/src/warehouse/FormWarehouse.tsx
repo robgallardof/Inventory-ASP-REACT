@@ -51,7 +51,7 @@ export default function FormWarehousees(props: formWarehouseProps) {
             >
               Guardar
             </Button>
-            <Link className="btn btn-secondary" to="/branch">
+            <Link className="btn btn-secondary" to="/warehouse">
               Cancelar
             </Link>
           </Form>

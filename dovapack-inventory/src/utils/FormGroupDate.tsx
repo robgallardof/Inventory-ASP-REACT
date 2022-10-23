@@ -3,8 +3,6 @@ import ShowErrorField from "./ShowErrorField";
 
 export default function FormGroupDate(props: forGroupDateProps) {
   const { values, validateForm, touched, errors } = useFormikContext<any>();
-  console.log('values', values);
-  console.log('props.field', values[props.label]);
   return (
     <div className="form-group">
       <label htmlFor={props.field}>{props.label}</label>

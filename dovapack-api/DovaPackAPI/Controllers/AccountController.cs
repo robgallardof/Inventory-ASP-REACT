@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DovaPackAPI.DTOs;
+using DovaPackAPI.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DovaPackAPI.DTOs;
-using DovaPackAPI.Utils;
 
 namespace DovaPackAPI.Controllers
 {
@@ -65,7 +65,7 @@ namespace DovaPackAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<AnswerAuthDTO>> Create([FromBody] CredentialUserDTO credentials)
+        public async Task<ActionResult<AuthResponseDTO>> Create([FromBody] CredentialUserDTO credentials)
         {
             var user = new IdentityUser { UserName = credentials.Email, Email = credentials.Email };
             var result = await userManager.CreateAsync(user, credentials.Password);
@@ -81,7 +81,7 @@ namespace DovaPackAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AnswerAuthDTO>> Login([FromBody] CredentialUserDTO credentials)
+        public async Task<ActionResult<AuthResponseDTO>> Login([FromBody] CredentialUserDTO credentials)
         {
             var result = await signInManager.PasswordSignInAsync(credentials.Email, credentials.Password,
                 isPersistent: false, lockoutOnFailure: false);
@@ -96,7 +96,7 @@ namespace DovaPackAPI.Controllers
             }
         }
 
-        private async Task<AnswerAuthDTO> BuildToken(CredentialUserDTO credentials)
+        private async Task<AuthResponseDTO> BuildToken(CredentialUserDTO credentials)
         {
             var claims = new List<Claim>()
             {
@@ -116,7 +116,7 @@ namespace DovaPackAPI.Controllers
             var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
                 expires: expiration, signingCredentials: creds);
 
-            return new AnswerAuthDTO()
+            return new AuthResponseDTO()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration

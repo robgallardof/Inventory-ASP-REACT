@@ -2,17 +2,17 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { warehouseDTO } from "../warehouse/warehouse.models";
-import { CategoryDTO } from "../categories/category.model";
+import { categoryDTO } from "../categories/category.model";
 import { urlPackagesBox } from "../utils/endpoints";
 import { convertPackageToFormData } from "../utils/FormDataUtils";
 import Loading from "../utils/Loading";
 import ShowErrors from "../utils/ShowErrors";
-import FormPackages from "./FormPackageBox";
+import FormPackagesBox from "./FormPackageBox";
 import { packageBoxPostGetDTO, packageBoxCreationDTO } from "./packagesBox.models";
 
 export default function CreatePackage() {
   const [categoriesNotSelected, setCategoriesNotSelected] = useState<
-    CategoryDTO[]
+    categoryDTO[]
   >([]);
   const [warehousesNotSelected, setWarehousesNotSelected] = useState<warehouseDTO[]>(
     []
@@ -31,9 +31,9 @@ export default function CreatePackage() {
       });
   }, []);
 
-  async function create(pack: packageBoxCreationDTO) {
+  async function create(packageBox: packageBoxCreationDTO) {
     try {
-      const formData = convertPackageToFormData(pack);
+      const formData = convertPackageToFormData(packageBox);
       await axios({
         method: "post",
         url: urlPackagesBox,
@@ -44,15 +44,17 @@ export default function CreatePackage() {
       });
     } catch (error) {
       setErrors(error.response.data);
+      console.log(error)
     }
   }
 
   return (
     <>
       <h3>Crear Paquete</h3>
+      console.log(errors)
       <ShowErrors errors={errors} />
       {loaded ? 
-        <FormPackages
+        <FormPackagesBox
           providersSelected={[]}
           warehousesNotSelected={warehousesNotSelected}
           warehousesSelected={[]}
@@ -60,10 +62,9 @@ export default function CreatePackage() {
           categoriesSelected={[]}
           model={{
             name: "",
-            inWarehouse: false,
+            // inWarehouse: false,
             description: "",
-            price: 0,
-            review: "",
+            // price: 0,
           }}
           onSubmit={async values => create(values)}
         />
