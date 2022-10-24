@@ -2,23 +2,25 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams } from "react-router-dom";
-import { urlRatings, urlPackagesBox } from "../utils/endpoints";
 import { coordinateDTO } from "../utils/coordinates.model";
 import Loading from "../utils/Loading";
 import MapLeaflet from "../utils/Map";
-import Swal from "sweetalert2";
-import Rating from "../utils/Rating";
 import { packageBoxDTO } from "./packagesBox.models";
+import { urlPackagesBox } from "../utils/endpoints";
 
 export default function DetailPackage() {
   const { id }: any = useParams();
-  const [packagebox, setPackage] = useState<packageBoxDTO>();
+  const [packagebox, setPackageBox] = useState<packageBoxDTO>();
 
   useEffect(() => {
-    axios.get(`${urlPackagesBox}/${id}`).then((answer: AxiosResponse<packageBoxDTO>) => {
-      answer.data.priorityShippingDate = new Date(answer.data.priorityShippingDate);
-      setPackage(answer.data);
-    });
+    axios
+      .get(`${urlPackagesBox}/${id}`)
+      .then((answer: AxiosResponse<packageBoxDTO>) => {
+        answer.data.priorityShippingDate = new Date(
+          answer.data.priorityShippingDate
+        );
+        setPackageBox(answer.data);
+      });
   }, [id]);
 
   function transformCoordinates(): coordinateDTO[] {
@@ -32,14 +34,7 @@ export default function DetailPackage() {
       });
       return coordinates;
     }
-
     return [];
-  }
-
-
-  async function onVote(vote: number) {
-    await axios.post(urlRatings, { punctuation: vote, packId: id });
-    Swal.fire({ icon: "success", title: "Voto recibido" });
   }
 
   return packagebox ? (
@@ -58,9 +53,7 @@ export default function DetailPackage() {
             {category.name}
           </Link>
         ))}
-        | {packagebox.priorityShippingDate.toDateString()}| {packagebox.averageVote!}
-        | Valoraciones:
-        <Rating maxValue={5} valueSelected={packagebox.voteUser!} onChange={onVote} />
+        | {packagebox.priorityShippingDate.toDateString()}
         <div style={{ display: "flex", marginTop: "1rem" }}>
           <span style={{ display: "inline-block", marginRight: "1rem" }}>
             <img
@@ -114,7 +107,7 @@ export default function DetailPackage() {
         ) : null}
         {packagebox.warehouses && packagebox.warehouses.length > 0 ? (
           <div>
-            <h2>Mostrándose en los siguiente warehouses</h2>
+            <h2>Establecido en el siguiente Almacen</h2>
             <MapLeaflet onlyRead={true} coordinates={transformCoordinates()} />
           </div>
         ) : null}

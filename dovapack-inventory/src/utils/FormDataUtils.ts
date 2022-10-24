@@ -1,15 +1,13 @@
 import { providerCreationDTO } from "../provider/provider.model";
 import { packageBoxCreationDTO } from "../PackageBox/packagesBox.models";
 
-
-
 export function convertProviderToFormData(provider: providerCreationDTO): FormData{
     const formData = new FormData();
 
     formData.append('name', provider.name);
-    if (provider.biography){
-        formData.append('biography', provider.biography);
-    }
+    // if (provider.biography){
+    //     formData.append('biography', provider.biography);
+    // }
 
     if (provider.image){
         formData.append("image", provider.image);

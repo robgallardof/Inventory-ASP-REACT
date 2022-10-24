@@ -15,7 +15,5 @@
         public List<CategoryDTO> Categories { get; set; }
         public List<WarehouseDTO> Warehouses { get; set; }
         public List<PackageBoxProviderDTO> Providers { get; set; }
-        public double AverageVote { get; set; }
-        public int UserVote { get; set; }
     }
 }

@@ -21,8 +21,8 @@ export default function EditPackageBox() {
       .then((answer: AxiosResponse<packageBoxPutGetDTO>) => {
         const model: packageBoxCreationDTO = {
           name: answer.data.packageBox?.name,
-          imageLink: answer.data.packageBox.image,
-          description: answer.data.packageBox.description,
+          imageLink: answer.data.packageBox?.image,
+          description: answer.data.packageBox?.description,
           priorityShippingDate: new Date(answer.data.packageBox.priorityShippingDate),
         };
         setPackageBox(model);
@@ -40,8 +40,8 @@ export default function EditPackageBox() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       navigate(`/packagebox/${id}`);
-    } catch (error) {
-      console.log(error.response.data);
+    } 
+    catch (error) {
       setErrors(error.response.data);
     }
   }

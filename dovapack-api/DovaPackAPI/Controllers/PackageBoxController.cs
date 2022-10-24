@@ -18,7 +18,6 @@ namespace DovaPackAPI.Controllers
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly IStorageFiles storageFiles;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly string container = "packagesbox";
 
         public PackagesBoxController(ApplicationDbContext context,
@@ -29,7 +28,6 @@ namespace DovaPackAPI.Controllers
             this.context = context;
             this.mapper = mapper;
             this.storageFiles = storageFiles;
-            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -71,32 +69,7 @@ namespace DovaPackAPI.Controllers
 
             if (packageBox == null) { return NotFound(); }
 
-            var averageVote = 0.0;
-            var userVote = 0;
-
-            if (await context.Ratings.AnyAsync(x => x.PackagesBoxId == id))
-            {
-                averageVote = await context.Ratings.Where(x => x.PackagesBoxId == id)
-                    .AverageAsync(x => x.Punctuation);
-
-                if (HttpContext.User.Identity.IsAuthenticated)
-                {
-                    var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "email").Value;
-                    var usuario = await userManager.FindByEmailAsync(email);
-                    var usuarioId = usuario.Id;
-                    var ratingDB = await context.Ratings
-                        .FirstOrDefaultAsync(x => x.UserId == usuarioId && x.PackagesBoxId == id);
-
-                    if (ratingDB != null)
-                    {
-                        userVote = ratingDB.Punctuation;
-                    }
-                }
-            }
-
             var dto = mapper.Map<PackageBoxDTO>(packageBox);
-            dto.UserVote = userVote;
-            dto.AverageVote = averageVote;
             dto.Providers = dto.Providers.OrderBy(x => x.Order).ToList();
             return dto;
         }
@@ -155,30 +128,25 @@ namespace DovaPackAPI.Controllers
             var packageBox = mapper.Map<PackageBox>(packageBoxCreationDTO);
 
             if (packageBoxCreationDTO.Image != null)
-            {
+             {
                 packageBox.Image = await storageFiles.SaveFile(container, packageBoxCreationDTO.Image);
             }
 
             OrderProviders(packageBox);
             context.Add(packageBox);
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+
+            await context.SaveChangesAsync();
+         
             return packageBox.Id;
         }
 
         [HttpGet("PutGet/{id:int}")]
         public async Task<ActionResult<PackagesBoxPutGetDTO>> PutGet(int id)
         {
-            var toyActionResult = await Get(id);
-            if (toyActionResult.Result is NotFoundResult) { return NotFound(); }
+            var packageBoxActionResult = await Get(id);
+            if (packageBoxActionResult.Result is NotFoundResult) { return NotFound(); }
 
-            var packageBox = toyActionResult.Value;
+            var packageBox = packageBoxActionResult.Value;
 
             var categoriesSelectedIds = packageBox.Categories.Select(x => x.Id).ToList();
             var categoriesNotSelected = await context.Categories
@@ -253,8 +221,10 @@ namespace DovaPackAPI.Controllers
         {
             if (packageBox.PackagesBoxProviders != null)
             {
-                int order = 0;
-                packageBox.PackagesBoxProviders.ToList().ForEach(tb => tb.Order = (order++));
+                for (int i = 0; i < packageBox.PackagesBoxProviders.Count; i++)
+                {
+                    packageBox.PackagesBoxProviders[i].Order = i;
+                }
             }
         }
     }

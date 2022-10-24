@@ -5,7 +5,6 @@ import FormGroupText from "../utils/FormGroupText";
 import Button from "../utils/Buttons";
 import { Link } from "react-router-dom";
 import FormGroupsImage from "../utils/FormGroupImage";
-import FormGroupMarkdown from "../utils/FormGroupMarkdown";
 
 export default function FormProvider(props: formProviderProps) {
   const schemeProvider = Yup.object().shape({
@@ -34,7 +33,6 @@ export default function FormProvider(props: formProviderProps) {
             label="Imagen"
             imageLink={props.model.imageLink}
           />
-          <FormGroupMarkdown field="biography" label="Biografía" />
           <Button disabled={isSubmitting} type="submit">
             Guardar
           </Button>

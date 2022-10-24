@@ -14,8 +14,6 @@ export interface packageBoxDTO {
   categories: categoryDTO[];
   warehouses: warehouseDTO[];
   providers: providerPackageBoxDTO[];
-  voteUser?: number;
-  averageVote?: number;
 }
 
 export interface packageBoxCreationDTO {

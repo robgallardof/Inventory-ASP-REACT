@@ -137,12 +137,9 @@ namespace DovaPackAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Biography")
+                    b.Property<string>("Image")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -152,32 +149,6 @@ namespace DovaPackAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Providers");
-                });
-
-            modelBuilder.Entity("DovaPackAPI.Entities.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("PackagesBoxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Punctuation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PackagesBoxId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("DovaPackAPI.Entities.Warehouse", b =>
@@ -450,23 +421,6 @@ namespace DovaPackAPI.Migrations
                     b.Navigation("PackageBox");
 
                     b.Navigation("Warehouse");
-                });
-
-            modelBuilder.Entity("DovaPackAPI.Entities.Rating", b =>
-                {
-                    b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackagesBox")
-                        .WithMany()
-                        .HasForeignKey("PackagesBoxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("PackagesBox");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,0 +1,121 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>readme.md</title><style></style></head><body id="preview">
+<h1 class="code-line" data-line-start=0 data-line-end=1><a id="DovaPack_0"></a>DovaPack</h1>
+<h2 class="code-line" data-line-start=1 data-line-end=2><a id="_The_Last_Markdown_Editor_Ever__1"></a><em>The Last Markdown Editor, Ever</em></h2>
+<p class="has-line-data" data-line-start="3" data-line-end="4"><a href="https://nodesource.com/products/nsolid"><img src="https://cldup.com/dTxpPi9lDf.thumb.png" alt="N|Solid"></a></p>
+<p class="has-line-data" data-line-start="5" data-line-end="6"><a href="https://travis-ci.org/joemccann/dillinger"><img src="https://travis-ci.org/joemccann/dillinger.svg?branch=master" alt="Build Status"></a></p>
+<h2 class="code-line" data-line-start=9 data-line-end=10><a id="Plugins_9"></a>Plugins</h2>
+<p class="has-line-data" data-line-start="11" data-line-end="12">Nugets utilizados.</p>
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>Nuget</th>
+<th>Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>Microsoft.EntityFrameworkCore</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>Microsoft.EntityFrameworkCore.SqlServer</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>AutoMapper.Extensions.Microsoft.DependencyInjection</td>
+<td>{12.0.0}</td>
+</tr>
+<tr>
+<td>Newtonsoft.Json</td>
+<td>{13.0.1}</td>
+</tr>
+<tr>
+<td>NetTopologySuite</td>
+<td>{2.5.0}</td>
+</tr>
+<tr>
+<td>Microsoft.OpenApi</td>
+<td>{1.4.3}</td>
+</tr>
+<tr>
+<td>Swashbuckle.AspNetCore.Swagger</td>
+<td>{6.4.0}</td>
+</tr>
+<tr>
+<td>Swashbuckle.AspNetCore.SwaggerGen</td>
+<td>{6.4.0}</td>
+</tr>
+<tr>
+<td>Microsoft.AspNetCore.Identity.EntityFrameworkCore</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>Azure.Storage.Blobs</td>
+<td>{12.14.1}</td>
+</tr>
+<tr>
+<td>AutoMapper</td>
+<td>{12.0.0}</td>
+</tr>
+<tr>
+<td>Microsoft.AspNetCore.Authentication.JwtBearer</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>Microsoft.EntityFrameworkCore.Tools</td>
+<td>{6.0.10}</td>
+</tr>
+<tr>
+<td>Swashbuckle.AspNetCore.SwaggerUI</td>
+<td>{6.4.0}</td>
+</tr>
+</tbody>
+</table>
+<h2 class="code-line" data-line-start=32 data-line-end=33><a id="Configuracin_Web_Api_en_el_entorno_de_Visual_Studio_32"></a>Configuración Web Api en el entorno de Visual Studio</h2>
+<p class="has-line-data" data-line-start="34" data-line-end="37">Configurar el archivo appsettings.Delopment.json estableciento las rutas del FrontEnd proveniente de React, y<br>
+la cadena de conexión de SQL Server.<br>
+<img src="https://i.imgur.com/qCAQrWm.png" alt="alt text"></p>
+<p class="has-line-data" data-line-start="38" data-line-end="40">Ejecutamos el comando Update-Database para crear la Base de datos y las tablas.<br>
+<img src="https://i.imgur.com/ipKBVnz.png" alt="alt text"></p>
+<pre><code class="has-line-data" data-line-start="42" data-line-end="44" class="language-sh">update-database
+</code></pre>
+<p class="has-line-data" data-line-start="44" data-line-end="45">Y posteriormente procederemos a correr nuestra Web Api, de preferencia con IIEXPRESS</p>
+<h2 class="code-line" data-line-start=46 data-line-end=47><a id="Primeros_Pasos_46"></a>Primeros Pasos</h2>
+<ul>
+<li class="has-line-data" data-line-start="48" data-line-end="50">Registrarse.<br>
+<img src="https://i.imgur.com/i9GYq62.png" alt="alt text"></li>
+<li class="has-line-data" data-line-start="50" data-line-end="51">Una vez registrado tendrás que desloguearte y ejecutar el siguiente Query en la Base de Datos, deberás modificar el email por el tuyo asignado:</li>
+</ul>
+<pre><code class="has-line-data" data-line-start="52" data-line-end="61" class="language-sh">-- Asignación de rango administrador al usuario.
+DECLARE @Email      AS NVARCHAR(<span class="hljs-number">50</span>) = <span class="hljs-string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="52313d3c2633312612203d303720263d35333e3e3320363d7c3f2a">[email&#160;protected]</a>'</span>, -- Remplazar correo por tú registrado.
+        @ClaimType  AS NVARCHAR(<span class="hljs-number">50</span>) = <span class="hljs-string">'role'</span>,
+        @ClaimValue AS NVARCHAR(<span class="hljs-number">50</span>) = <span class="hljs-string">'admin'</span>;
+
+INSERT INTO [AspNetUserClaims](UserId,ClaimType,ClaimValue)
+SELECT id,@ClaimType,@ClaimValue FROM [AspNetUsers] AS users WHERE users.UserName = @Email
+
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="61" data-line-end="63">Nos volvemos a Loguear y ya tendríamos acceso en modo Administrador.</li>
+</ul>
+<h2 class="code-line" data-line-start=63 data-line-end=64><a id="Funcionamiento_63"></a>Funcionamiento</h2>
+<p class="has-line-data" data-line-start="64" data-line-end="67">Creación y edición de categorías.<br>
+<img src="https://i.imgur.com/kZqqZ6J.png" alt="alt text"><br>
+<img src="https://i.imgur.com/CvlAPlY.png" alt="alt text"></p>
+<p class="has-line-data" data-line-start="68" data-line-end="71">Creación y edición de Proveedores.<br>
+<img src="https://i.imgur.com/V5h5ugP.png" alt="alt text"><br>
+<img src="https://i.imgur.com/WaQZNLp.png" alt="alt text"></p>
+<p class="has-line-data" data-line-start="72" data-line-end="75">Creación y edición de Almacenes.<br>
+<img src="https://i.imgur.com/GqxwIaB.png" alt="alt text"><br>
+<img src="https://i.imgur.com/HFwr9fX.png" alt="alt text"></p>
+<p class="has-line-data" data-line-start="76" data-line-end="79">Creación y edición de Paquetes.<br>
+<img src="https://i.imgur.com/GqxwIaB.png" alt="alt text"><br>
+<img src="https://i.imgur.com/HFwr9fX.png" alt="alt text"></p>
+<blockquote>
+<p class="has-line-data" data-line-start="82" data-line-end="83">Gracias por usar mi proyecto :).</p>
+</blockquote>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body></html>

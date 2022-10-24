@@ -1,7 +1,6 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import FormGroupText from "../utils/FormGroupText";
-import FormGroupCheckbox from "../utils/FormGroupCheckbox";
 import FormGroupImage from "../utils/FormGroupImage";
 import Button from "../utils/Buttons";
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ import SelectorMultiple, {
 } from "../utils/SelectorMultiple";
 import { warehouseDTO } from "../warehouse/warehouse.models";
 import { providerPackageBoxDTO } from "../provider/provider.model";
-import FormGroupNumber from "../utils/FormGroupMoney";
 import FormGroupDate from "../utils/FormGroupDate";
 import { packageBoxCreationDTO } from "./packagesBox.models";
 import TypeAheadProvider from "../provider/TypeAheadProvider";
@@ -83,7 +81,7 @@ export default function FormPackagesBox(props: FormPackageProps) {
           {/* <FormGroupCheckbox label="En sucursal" field="inWarehouse" /> */}
           <FormGroupText label="Descripción" field={"description"} />
           {/* <FormGroupNumber label="Precio:" field={"price"} /> */}
-          <FormGroupDate label="Fecha Lanzamiento" field="priorityShippingDate" />
+          <FormGroupDate label="Fecha Entrega" field="priorityShippingDate" />
         
           <FormGroupImage
             field="image"

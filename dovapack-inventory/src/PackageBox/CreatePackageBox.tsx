@@ -1,22 +1,25 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { warehouseDTO } from "../warehouse/warehouse.models";
-import { categoryDTO } from "../categories/category.model";
 import { urlPackagesBox } from "../utils/endpoints";
 import { convertPackageToFormData } from "../utils/FormDataUtils";
 import Loading from "../utils/Loading";
 import ShowErrors from "../utils/ShowErrors";
 import FormPackagesBox from "./FormPackageBox";
-import { packageBoxPostGetDTO, packageBoxCreationDTO } from "./packagesBox.models";
+import {
+  packageBoxPostGetDTO,
+  packageBoxCreationDTO,
+} from "./packagesBox.models";
+import { categoryDTO } from "../categories/category.model";
+import { warehouseDTO } from "../warehouse/warehouse.models";
 
 export default function CreatePackage() {
   const [categoriesNotSelected, setCategoriesNotSelected] = useState<
     categoryDTO[]
   >([]);
-  const [warehousesNotSelected, setWarehousesNotSelected] = useState<warehouseDTO[]>(
-    []
-  );
+  const [warehousesNotSelected, setWarehousesNotSelected] = useState<
+    warehouseDTO[]
+  >([]);
   const [loaded, setLoaded] = useState(false);
   const navigation = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
@@ -44,16 +47,14 @@ export default function CreatePackage() {
       });
     } catch (error) {
       setErrors(error.response.data);
-      console.log(error)
     }
   }
 
   return (
     <>
       <h3>Crear Paquete</h3>
-      console.log(errors)
       <ShowErrors errors={errors} />
-      {loaded ? 
+      {loaded ? (
         <FormPackagesBox
           providersSelected={[]}
           warehousesNotSelected={warehousesNotSelected}
@@ -66,9 +67,9 @@ export default function CreatePackage() {
             description: "",
             // price: 0,
           }}
-          onSubmit={async values => create(values)}
+          onSubmit={async (values) => create(values)}
         />
-       : (
+      ) : (
         <Loading />
       )}
     </>

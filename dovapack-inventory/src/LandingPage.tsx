@@ -21,10 +21,10 @@ export default function LandingPage() {
   return (
     <>
       <AlertContext.Provider value={() => LoadData()}>
-        <h3>Paquetes disponibles</h3>
-        {/* <ListPackages packageBox={packageBox.inWarehouse} /> */}
+        {/* <h3>Paquetes disponibles</h3>
+        <ListPackages packageBox={packageBox.inWarehouse} /> */}
 
-        <h3>Próximos Paquetes</h3>
+        <h3>Nuevos Paquetes</h3>
         <ListPackages packageBox={packageBox.priorityShippingPackages} />
       </AlertContext.Provider>
     </>

@@ -7,7 +7,7 @@ import GenericList from "./GenericList";
 import Pagination from "./Pagination";
 
 
-export default function IndiceEntidad<T>(props: indiceEntidadProps<T>) {
+export default function IndexEntity<T>(props: IndexEntityProps<T>) {
 
     const [entities, setEntities] = useState<T[]>();
     const [totalPages, setTotalPages] = useState(0);
@@ -21,7 +21,7 @@ export default function IndiceEntidad<T>(props: indiceEntidadProps<T>) {
 
     function loadData() {
         axios.get(props.url, {
-            params: { page: page, recordsPorPagina: recordsPerPage }
+            params: { page: page, recordsPerPage: recordsPerPage }
         })
             .then((answer: AxiosResponse<T[]>) => {
                 const totalOfRegisters =
@@ -84,11 +84,11 @@ export default function IndiceEntidad<T>(props: indiceEntidadProps<T>) {
     )
 }
 
-interface indiceEntidadProps<T> {
+interface IndexEntityProps<T> {
     url: string;
     urlCreate?: string;
     children(entidades: T[],
-        botones: (urlEditar: string, id: number) => ReactElement): ReactElement;
+        botones: (urlEdit: string, id: number) => ReactElement): ReactElement;
     title: string;
     nameEntity?: string;
 }

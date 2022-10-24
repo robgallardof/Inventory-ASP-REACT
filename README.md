@@ -1,35 +1,87 @@
-# Clean Architecture Template
-![.NET Core](https://github.com/iayti/CleanArchitecture/workflows/.NET%20Core/badge.svg) [![Matech.Clean.Architecture.Template NuGet Package](https://img.shields.io/badge/nuget-1.1.4-blue)](https://www.nuget.org/packages/Matech.Clean.Architecture.Template) [![NuGet](https://img.shields.io/nuget/dt/Matech.Clean.Architecture.Template.svg)](https://www.nuget.org/packages/Matech.Clean.Architecture.Template)
+# DovaPack
+## _The Last Markdown Editor, Ever_
 
-This is a solution template for creating a ASP.NET Core Web API following the principles of Clean Architecture. Create a new project based on this template by clicking the above **Use this template** button or by installing and running the associated NuGet package (see Getting Started for full details). 
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-## Technologies
-* [ASP.NET Core 6](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
-* [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/)
-* [React](https://reactjs.org/blog/2022/03/29/react-v18.html)
-* [Bootstrap 5.2](https://getbootstrap.com/docs/5.2/getting-started/introduction/)
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 
-React:
-Cambiar link (puerto) del Visual Studio en el .env.development.
 
-#npm install 
-#npm start 
+## Plugins
+
+Nugets utilizados.
+
+| Nuget  | Versions |
+| ------ | ------ |
+Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite| {6.0.10}  
+Microsoft.EntityFrameworkCore                           |{6.0.10}  
+Microsoft.EntityFrameworkCore.SqlServer                 |{6.0.10}  
+AutoMapper.Extensions.Microsoft.DependencyInjection     |{12.0.0}  
+Newtonsoft.Json                                         |{13.0.1}  
+NetTopologySuite                                        |{2.5.0}   
+Microsoft.OpenApi                                       |{1.4.3}   
+Swashbuckle.AspNetCore.Swagger                          |{6.4.0}   
+Swashbuckle.AspNetCore.SwaggerGen                       |{6.4.0}   
+Microsoft.AspNetCore.Identity.EntityFrameworkCore       |{6.0.10}  
+Azure.Storage.Blobs                                     |{12.14.1} 
+AutoMapper                                              |{12.0.0}  
+Microsoft.AspNetCore.Authentication.JwtBearer           |{6.0.10}  
+Microsoft.EntityFrameworkCore.Tools                     |{6.0.10}  
+Swashbuckle.AspNetCore.SwaggerUI                        |{6.4.0}   
 
 
-Packages
-The package reference is available
+## Configuración Web Api en el entorno de Visual Studio
 
-Installar Nugets Packages:
-Microsoft.EntityFrameworkCore.Tools
-Microsoft.EntityFrameworkCore.SqlServer
-Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite 
-Microsoft.AspNetCore.Mvc.NewtonsoftJson
-AutoMapper.Extensions.Microsoft.DependencyInjection
-Azure.Storage.Blobs
-Newtonsoft.Json
+Configurar el archivo appsettings.Delopment.json estableciento las rutas del FrontEnd proveniente de React, y 
+la cadena de conexión de SQL Server.
+![alt text](https://i.imgur.com/qCAQrWm.png)
 
-Visual studio:
-Ejecutar en la consola de Nuget.
+Ejecutamos el comando Update-Database para crear la Base de datos y las tablas.
+![alt text](https://i.imgur.com/ipKBVnz.png)
+
+```sh
 update-database
+```
+Y posteriormente procederemos a correr nuestra Web Api, de preferencia con IIEXPRESS
+
+## Primeros Pasos
+
+- Registrarse.
+ ![alt text](https://i.imgur.com/i9GYq62.png)
+- Una vez registrado tendrás que desloguearte y ejecutar el siguiente Query en la Base de Datos, deberás modificar el email por el tuyo asignado:
+```sh
+-- Asignación de rango administrador al usuario.
+DECLARE @Email		AS NVARCHAR(50) = 'contact@robertogallardo.mx', -- Remplazar correo por tú registrado.
+		@ClaimType	AS NVARCHAR(50) = 'role',
+		@ClaimValue AS NVARCHAR(50) = 'admin';
+
+INSERT INTO [AspNetUserClaims](UserId,ClaimType,ClaimValue)
+SELECT id,@ClaimType,@ClaimValue FROM [AspNetUsers] AS users WHERE users.UserName = @Email
+
+```
+- Nos volvemos a Loguear y ya tendríamos acceso en modo Administrador.
+
+## Funcionamiento
+Creación y edición de categorías.
+ ![alt text](https://i.imgur.com/kZqqZ6J.png)
+ ![alt text](https://i.imgur.com/CvlAPlY.png)
+
+Creación y edición de Proveedores.
+ ![alt text](https://i.imgur.com/V5h5ugP.png)
+ ![alt text](https://i.imgur.com/WaQZNLp.png)
+ 
+ Creación y edición de Almacenes.
+ ![alt text](https://i.imgur.com/GqxwIaB.png)
+ ![alt text](https://i.imgur.com/HFwr9fX.png)
+
+ Creación y edición de Paquetes.
+ ![alt text](https://i.imgur.com/GqxwIaB.png)
+ ![alt text](https://i.imgur.com/HFwr9fX.png)
+
+
+
+> Gracias por usar mi proyecto :).
+
+
+
 

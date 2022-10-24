@@ -17,10 +17,10 @@ namespace DovaPackAPI
                 .HasKey(x => new { x.ProviderId, x.PackagesBoxId });
 
             modelBuilder.Entity<PackagesBoxCategories>()
-             .HasKey(x => new {  x.PackageBoxId, x.CategoryId, });
+             .HasKey(x => new { x.PackageBoxId, x.CategoryId, });
 
             modelBuilder.Entity<PackagesBoxWarehouses>()
-            .HasKey(x => new {  x.PackagesBoxId, x.WarehouseId, });
+            .HasKey(x => new { x.PackagesBoxId, x.WarehouseId, });
 
             base.OnModelCreating(modelBuilder);
         }
@@ -37,7 +37,5 @@ namespace DovaPackAPI
         public DbSet<PackagesBoxCategories> PackagesBoxCategories { get; set; }
 
         public DbSet<PackagesBoxWarehouses> PackagesBoxWarehouses { get; set; }
-
-        public DbSet<Rating> Ratings { get; set; }
     }
 }

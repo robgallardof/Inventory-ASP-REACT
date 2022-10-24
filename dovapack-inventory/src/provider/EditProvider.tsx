@@ -9,7 +9,6 @@ export default function EditProvider() {
     return {
       name: provider.name,
       imageLink: provider.image,
-      biography: provider.biography,
     };
   };
 

@@ -13,8 +13,8 @@ using NetTopologySuite.Geometries;
 namespace DovaPackAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221023175924_init")]
-    partial class init
+    [Migration("20221023232015_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,18 +57,12 @@ namespace DovaPackAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("InWarehouse")
-                        .HasColumnType("bit");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(5,2)");
 
                     b.Property<DateTime>("PriorityShippingDate")
                         .HasColumnType("datetime2");

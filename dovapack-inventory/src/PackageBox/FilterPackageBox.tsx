@@ -20,7 +20,7 @@ export default function FilterPackage() {
   };
 
   const [categories, setCategories] = useState<categoryDTO[]>([]);
-  const [packageBox, setPackages] = useState<packageBoxDTO[]>([]);
+  const [packageBox, setPackagesBox] = useState<packageBoxDTO[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const query = new URLSearchParams(useLocation().search);
@@ -69,7 +69,7 @@ export default function FilterPackage() {
         );
         setTotalPages(Math.ceil(totalRegisters / valueInit.recordsPerPage));
 
-        setPackages(answer.data);
+        setPackagesBox(answer.data);
       });
   }
 
