@@ -93,16 +93,13 @@ namespace DovaPackAPI.Migrations
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PackagesBoxId")
+                    b.Property<int>("PackageBoxId")
                         .HasColumnType("int");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PackageBoxId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProviderId", "PackagesBoxId");
+                    b.HasKey("ProviderId", "PackageBoxId");
 
                     b.HasIndex("PackageBoxId");
 
@@ -111,18 +108,13 @@ namespace DovaPackAPI.Migrations
 
             modelBuilder.Entity("DovaPackAPI.Entities.PackagesBoxWarehouses", b =>
                 {
-                    b.Property<int>("PackagesBoxId")
+                    b.Property<int>("PackageBoxId")
                         .HasColumnType("int");
 
                     b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PackageBoxId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PackagesBoxId", "WarehouseId");
-
-                    b.HasIndex("PackageBoxId");
+                    b.HasKey("PackageBoxId", "WarehouseId");
 
                     b.HasIndex("WarehouseId");
 
@@ -393,7 +385,9 @@ namespace DovaPackAPI.Migrations
                 {
                     b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackageBox")
                         .WithMany("PackagesBoxProviders")
-                        .HasForeignKey("PackageBoxId");
+                        .HasForeignKey("PackageBoxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DovaPackAPI.Entities.Provider", "Provider")
                         .WithMany("PackagesBoxProviders")
@@ -410,7 +404,9 @@ namespace DovaPackAPI.Migrations
                 {
                     b.HasOne("DovaPackAPI.Controllers.Entities.PackageBox", "PackageBox")
                         .WithMany("PackagesBoxWarehouses")
-                        .HasForeignKey("PackageBoxId");
+                        .HasForeignKey("PackageBoxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DovaPackAPI.Entities.Warehouse", "Warehouse")
                         .WithMany("PackagesBoxWarehouses")

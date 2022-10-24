@@ -14,13 +14,13 @@ namespace DovaPackAPI
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PackagesBoxProviders>()
-                .HasKey(x => new { x.ProviderId, x.PackagesBoxId });
+             .HasKey(x => new { x.ProviderId, x.PackageBoxId });
 
             modelBuilder.Entity<PackagesBoxCategories>()
              .HasKey(x => new { x.PackageBoxId, x.CategoryId, });
 
             modelBuilder.Entity<PackagesBoxWarehouses>()
-            .HasKey(x => new { x.PackagesBoxId, x.WarehouseId, });
+            .HasKey(x => new { x.PackageBoxId, x.WarehouseId, });
 
             base.OnModelCreating(modelBuilder);
         }

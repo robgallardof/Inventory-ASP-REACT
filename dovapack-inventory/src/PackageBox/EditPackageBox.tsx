@@ -20,9 +20,9 @@ export default function EditPackageBox() {
       .get(`${urlPackagesBox}/PutGet/${id}`)
       .then((answer: AxiosResponse<packageBoxPutGetDTO>) => {
         const model: packageBoxCreationDTO = {
-          name: answer.data.packageBox?.name,
-          imageLink: answer.data.packageBox?.image,
-          description: answer.data.packageBox?.description,
+          name: answer.data.packageBox.name,
+          imageLink: answer.data.packageBox.image,
+          description: answer.data.packageBox.description,
           priorityShippingDate: new Date(answer.data.packageBox.priorityShippingDate),
         };
         setPackageBox(model);

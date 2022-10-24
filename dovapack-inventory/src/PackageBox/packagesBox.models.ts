@@ -1,6 +1,6 @@
-import { warehouseDTO } from "../warehouse/warehouse.models";
-import { providerPackageBoxDTO } from "../provider/provider.model";
 import { categoryDTO } from "../categories/category.model";
+import { providerPackageBoxDTO } from "../provider/provider.model";
+import { warehouseDTO } from "../warehouse/warehouse.models";
 
 // Modelo de interface del Paquete.
 export interface packageBoxDTO {

@@ -1,24 +1,24 @@
 import css from "./IndividualPackageBox.module.css";
-// import { Link } from "react-router-dom";
-// import Button from "../utils/Buttons";
-// import Confirm from "../utils/Confirm";
-// import axios from "axios";
-// import { useContext } from "react";
-// import AlertContext from "../utils/AlertContext";
-// import Autorizate from "../auth/Autorizate";
+import { Link } from "react-router-dom";
+import Button from "../utils/Buttons";
+import Confirm from "../utils/Confirm";
+import axios from "axios";
+import { useContext } from "react";
+import AlertContext from "../utils/AlertContext";
+import Autorizate from "../auth/Autorizate";
 import { packageBoxDTO } from "./packagesBox.models";
-// import { urlPackagesBox } from "../utils/endpoints";
+import { urlPackagesBox } from "../utils/endpoints";
 
 export default function IndividualPackage(props: individualPackageBoxProps) {
   // Construcción del Link.
   const buildLink = () => `/packagebox/${props.packageBox.id}`;
-  // const alerts = useContext(AlertContext);
+  const alerts = useContext(AlertContext);
 
-  // function DeletePackageBox() {
-  //   axios.delete(`${urlPackagesBox}/${props.packageBox.id}`).then(() => {
-  //     alerts();
-  //   });
-  // }
+  function DeletePackageBox() {
+    axios.delete(`${urlPackagesBox}/${props.packageBox.id}`).then(() => {
+      alerts();
+    });
+  }
 
   return (
     <div className={css.div}>
@@ -28,7 +28,7 @@ export default function IndividualPackage(props: individualPackageBoxProps) {
       <p>
         <a href={buildLink()}>{props.packageBox.name}</a>
       </p>
-      {/* <Autorizate
+      <Autorizate
         role="admin"
         autorizate={
           <div>
@@ -47,7 +47,7 @@ export default function IndividualPackage(props: individualPackageBoxProps) {
             </Button>
           </div>
         }
-      /> */}
+      />
     </div>
   );
 }

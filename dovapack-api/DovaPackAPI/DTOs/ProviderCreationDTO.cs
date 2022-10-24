@@ -8,7 +8,6 @@ namespace DovaPackAPI.DTOs
         [StringLength(maximumLength: 50)]
         public string Name { get; set; }
 
-        [StringLength(maximumLength: 100)]
         public IFormFile Image { get; set; }
     }
 }

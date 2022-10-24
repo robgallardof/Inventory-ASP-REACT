@@ -4,7 +4,7 @@ namespace DovaPackAPI.Entities
 {
     public class PackagesBoxProviders
     {
-        public int PackagesBoxId { get; set; }
+        public int PackageBoxId { get; set; }
 
         public int ProviderId { get; set; }
 
