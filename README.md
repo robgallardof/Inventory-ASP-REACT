@@ -1,7 +1,4 @@
 # DovaPack
-## _The Last Markdown Editor, Ever_
-
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
@@ -43,6 +40,13 @@ Ejecutamos el comando Update-Database para crear la Base de datos y las tablas.
 update-database
 ```
 Y posteriormente procederemos a correr nuestra Web Api, de preferencia con IIEXPRESS
+
+## Configuración React 
+
+Configurar el archivo .env.development estableciento la ruta del backend.
+![alt text](https://i.imgur.com/w3hIX81.png)
+
+
 
 ## Primeros Pasos
 
