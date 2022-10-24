@@ -9,7 +9,7 @@ import FormPackagesBox from "./FormPackageBox";
 import {
   packageBoxPostGetDTO,
   packageBoxCreationDTO,
-} from "./packagesBox.models";
+} from "./packagesBox.model";
 import { categoryDTO } from "../categories/category.model";
 import { warehouseDTO } from "../warehouse/warehouse.models";
 

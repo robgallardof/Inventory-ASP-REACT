@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { urlPackagesBox } from "./utils/endpoints";
 import AlertContext from "./utils/AlertContext";
 import ListPackages from "./PackageBox/ListPackageBox";
-import { landingPageDTO } from "./PackageBox/packagesBox.models";
+import { landingPageDTO } from "./PackageBox/packagesBox.model";
 
 export default function LandingPage() {
   const [packageBox, setPackages] = useState<landingPageDTO>({});

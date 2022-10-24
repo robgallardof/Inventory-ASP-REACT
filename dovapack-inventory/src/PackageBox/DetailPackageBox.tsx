@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { coordinateDTO } from "../utils/coordinates.model";
 import Loading from "../utils/Loading";
 import MapLeaflet from "../utils/Map";
-import { packageBoxDTO } from "./packagesBox.models";
+import { packageBoxDTO } from "./packagesBox.model";
 import { urlPackagesBox } from "../utils/endpoints";
 
 export default function DetailPackage() {

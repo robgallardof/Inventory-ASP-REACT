@@ -1,5 +1,5 @@
 import GenericList from "../utils/GenericList";
-import { packageBoxDTO } from "./packagesBox.models";
+import { packageBoxDTO } from "./packagesBox.model";
 import css from "./ListPackagesBox.module.css";
 import IndividualPackageBox from "./IndividualPackageBox";
 

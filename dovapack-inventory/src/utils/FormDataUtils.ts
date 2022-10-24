@@ -1,5 +1,5 @@
 import { providerCreationDTO } from "../provider/provider.model";
-import { packageBoxCreationDTO } from "../PackageBox/packagesBox.models";
+import { packageBoxCreationDTO } from "../PackageBox/packagesBox.model";
 
 export function convertProviderToFormData(
   provider: providerCreationDTO

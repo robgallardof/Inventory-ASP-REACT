@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { urlPackagesBox } from "../utils/endpoints";
-import { packageBoxCreationDTO, packageBoxPutGetDTO } from './packagesBox.models';
+import { packageBoxCreationDTO, packageBoxPutGetDTO } from './packagesBox.model';
 import axios, { AxiosResponse } from "axios";
 import { useState, useEffect } from "react";
 import Loading from "../utils/Loading";

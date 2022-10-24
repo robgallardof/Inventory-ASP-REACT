@@ -7,7 +7,7 @@ import { urlCategories, urlPackagesBox } from "../utils/endpoints";
 import Button from "../utils/Buttons";
 import Pagination from "../utils/Pagination";
 import ListPackages from "./ListPackageBox";
-import { packageBoxDTO } from "./packagesBox.models";
+import { packageBoxDTO } from "./packagesBox.model";
 
 export default function FilterPackage() {
   const valueInit: FilterPackageForm = {

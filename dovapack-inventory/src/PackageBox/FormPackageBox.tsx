@@ -12,7 +12,7 @@ import SelectorMultiple, {
 import { warehouseDTO } from "../warehouse/warehouse.models";
 import { providerPackageBoxDTO } from "../provider/provider.model";
 import FormGroupDate from "../utils/FormGroupDate";
-import { packageBoxCreationDTO } from "./packagesBox.models";
+import { packageBoxCreationDTO } from "./packagesBox.model";
 import TypeAheadProvider from "../provider/TypeAheadProvider";
 
 export default function FormPackagesBox(props: FormPackageProps) {

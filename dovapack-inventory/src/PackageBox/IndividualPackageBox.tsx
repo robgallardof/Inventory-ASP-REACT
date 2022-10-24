@@ -6,7 +6,7 @@ import axios from "axios";
 import { useContext } from "react";
 import AlertContext from "../utils/AlertContext";
 import Autorizate from "../auth/Autorizate";
-import { packageBoxDTO } from "./packagesBox.models";
+import { packageBoxDTO } from "./packagesBox.model";
 import { urlPackagesBox } from "../utils/endpoints";
 
 export default function IndividualPackage(props: individualPackageBoxProps) {
