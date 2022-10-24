@@ -5,16 +5,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from '@mui/material/';
 
 library.add(faStar);
+const darkTheme = createTheme({
+  typography: {
+    fontFamily: '"IBM Plex Sans"',
+  },
+});
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+        <App />
+      </ThemeProvider>
   </React.StrictMode>
 );
 
@@ -22,5 +33,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-
