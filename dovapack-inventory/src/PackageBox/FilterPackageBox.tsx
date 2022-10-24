@@ -16,7 +16,7 @@ export default function FilterPackage() {
     priorityShipping: false,
     // inWarehouse: false,
     page: 1,
-    recordsPerPage: 1,
+    recordsPerPage: 6,
   };
 
   const [categories, setCategories] = useState<categoryDTO[]>([]);
