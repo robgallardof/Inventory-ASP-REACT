@@ -63,7 +63,7 @@ export default function Menu() {
                       }
                       to="/warehouse"
                     >
-                      Sucursales
+                      Almacenes
                     </NavLink>
                   </li>
                   <li className="nav-item">

@@ -102,7 +102,7 @@ export default function FormPackagesBox(props: FormPackageProps) {
           </div>
 
           <div className="form-group">
-            <label>Sucursales:</label>
+            <label>Almacenes:</label>
             <SelectorMultiple
               selected={warehousesSelected}
               notSelected={warehousesNotSelected}
