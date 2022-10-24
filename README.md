@@ -74,13 +74,16 @@ Creación y edición de Proveedores.
  ![alt text](https://i.imgur.com/GqxwIaB.png)
  ![alt text](https://i.imgur.com/HFwr9fX.png)
 
- Creación y edición de Paquetes.
- ![alt text](https://i.imgur.com/GqxwIaB.png)
- ![alt text](https://i.imgur.com/HFwr9fX.png)
+ Creación y visualización de paquetes.
+ ![alt text](https://i.imgur.com/ERWm3JT.png)
+ ![alt text](https://i.imgur.com/SdBiwnF.png)
+
+ Filtro de Paquetes.
+ ![alt text](https://i.imgur.com/ctSHER3.png)
 
 
 
-> Gracias por usar mi proyecto :).
+> La edición de Paquetes aún está pendiente.
 
 
 
