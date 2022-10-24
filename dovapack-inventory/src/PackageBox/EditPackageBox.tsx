@@ -9,6 +9,7 @@ import { convertPackageToFormData } from '../utils/FormDataUtils';
 import FormPackagesBox from './FormPackageBox';
 
 export default function EditPackageBox() {
+
   const [packageBox, setPackageBox] = useState<packageBoxCreationDTO>();
   const [packageBoxPutGet, setPackageBoxToyPutGet] = useState<packageBoxPutGetDTO>();
   const { id }: any = useParams();
@@ -20,10 +21,10 @@ export default function EditPackageBox() {
       .get(`${urlPackagesBox}/PutGet/${id}`)
       .then((answer: AxiosResponse<packageBoxPutGetDTO>) => {
         const model: packageBoxCreationDTO = {
-          name: answer.data.packageBox.name,
-          imageLink: answer.data.packageBox.image,
-          description: answer.data.packageBox.description,
-          priorityShippingDate: new Date(answer.data.packageBox.priorityShippingDate),
+          name: answer.data.packagesBox.name,
+          imageLink: answer.data.packagesBox.image,
+          description: answer.data.packagesBox.description,
+          priorityShippingDate: new Date(answer.data.packagesBox.priorityShippingDate),
         };
         setPackageBox(model);
         setPackageBoxToyPutGet(answer.data);
