@@ -10,21 +10,21 @@ Nugets utilizados.
 
 | Nuget  | Versions |
 | ------ | ------ |
-Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite| {6.0.10}  
-Microsoft.EntityFrameworkCore                           |{6.0.10}  
-Microsoft.EntityFrameworkCore.SqlServer                 |{6.0.10}  
-AutoMapper.Extensions.Microsoft.DependencyInjection     |{12.0.0}  
-Newtonsoft.Json                                         |{13.0.1}  
-NetTopologySuite                                        |{2.5.0}   
-Microsoft.OpenApi                                       |{1.4.3}   
-Swashbuckle.AspNetCore.Swagger                          |{6.4.0}   
-Swashbuckle.AspNetCore.SwaggerGen                       |{6.4.0}   
-Microsoft.AspNetCore.Identity.EntityFrameworkCore       |{6.0.10}  
-Azure.Storage.Blobs                                     |{12.14.1} 
-AutoMapper                                              |{12.0.0}  
-Microsoft.AspNetCore.Authentication.JwtBearer           |{6.0.10}  
-Microsoft.EntityFrameworkCore.Tools                     |{6.0.10}  
-Swashbuckle.AspNetCore.SwaggerUI                        |{6.4.0}   
+Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite| 6.0.10  
+Microsoft.EntityFrameworkCore                           |6.0.10  
+Microsoft.EntityFrameworkCore.SqlServer                 |6.0.10  
+AutoMapper.Extensions.Microsoft.DependencyInjection     |12.0.0  
+Newtonsoft.Json                                         |13.0.1  
+NetTopologySuite                                        |2.5.0   
+Microsoft.OpenApi                                       |1.4.3   
+Swashbuckle.AspNetCore.Swagger                          |6.4.0   
+Swashbuckle.AspNetCore.SwaggerGen                       |6.4.0   
+Microsoft.AspNetCore.Identity.EntityFrameworkCore       |6.0.10  
+Azure.Storage.Blobs                                     |12.14.1 
+AutoMapper                                              |12.0.0  
+Microsoft.AspNetCore.Authentication.JwtBearer           |6.0.10  
+Microsoft.EntityFrameworkCore.Tools                     |6.0.10  
+Swashbuckle.AspNetCore.SwaggerUI                        |6.4.0   
 
 
 ## Configuración Web Api en el entorno de Visual Studio
